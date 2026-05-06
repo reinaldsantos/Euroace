@@ -14,8 +14,13 @@ if (!fs.existsSync('uploads')) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
-app.use(cors());
+// Configurar CORS para aceitar qualquer origem (enquanto desenvolve)
+app.use(cors({
+  origin: '*', // Em produção, mude para o domínio específico
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
