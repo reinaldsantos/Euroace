@@ -35,6 +35,20 @@ db.serialize(() => {
     )
   `);
 
+    db.run(`
+    CREATE TABLE IF NOT EXISTS favoritos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      receita_id INTEGER NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (receita_id) REFERENCES receitas(id),
+
+      UNIQUE(user_id, receita_id)
+    )
+  `);
+  
   db.get("SELECT * FROM users WHERE username = 'admin'", (err, row) => {
     if (err) {
       console.error('Erro ao verificar admin:', err.message);

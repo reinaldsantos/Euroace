@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const favoritosRoutes = require('./routes/favoritos');
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ const receitasRoutes = require('./routes/receitas');
 // Usar rotas
 app.use('/api', authRoutes);
 app.use('/api', receitasRoutes);
+app.use('/api/favoritos', favoritosRoutes);
 
 // Rota de teste
 app.get('/', (req, res) => {
