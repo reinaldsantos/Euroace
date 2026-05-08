@@ -17,6 +17,15 @@ body{font-family:system-ui,sans-serif;background:var(--bg);color:#1a1a2e;overflo
 nav{display:flex;gap:.1rem;flex-wrap:wrap}
 .nl{padding:.4rem .75rem;border-radius:7px;font-size:.78rem;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;background:none;text-decoration:none}
 .nl:hover,.nl.act{background:#e8f0fe;color:#4a5a8a}
+
+/* DROPDOWNS */
+.nl-dropdown{position:relative;display:inline-block}
+.nl-dropdown > .nl{display:block}
+.nl-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 4px 6px rgba(0,0,0,.1);z-index:101;min-width:180px;margin-top:.2rem}
+.nl-dropdown:hover .nl-menu{display:block}
+.nl-item{display:block;padding:.5rem .8rem;font-size:.75rem;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;white-space:nowrap;border:none;background:none;text-decoration:none}
+.nl-item:hover{background:#e8f0fe;color:#4a5a8a}
+
 #btn-adm{display:flex;align-items:center;gap:.4rem;padding:.45rem 1rem;background:#4a5a8a;color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer}
 #btn-adm:hover{background:#5a6a9a}
 
@@ -119,7 +128,6 @@ nav{display:flex;gap:.1rem;flex-wrap:wrap}
  flex-direction:column;
  justify-content:center;
  padding:2rem 2.5rem 2rem 1rem;
- border-left:1px solid rgba(74,90,138,.15);
 }
 .hero-pt{
  font-family:Georgia,serif;

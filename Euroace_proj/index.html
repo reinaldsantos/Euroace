@@ -17,11 +17,38 @@
  <div class="logo-txt"><span class="lm">EuroACE</span><span class="ls">Dia da Europa 2026</span></div>
  </div>
  <nav>
- <span class="nl act" onclick="sc('hero')">Início</span>
- <span class="nl" onclick="sc('sec-about')">Sobre</span>
- <span class="nl" onclick="sc('sec-fichas')">Showcooking</span>
- <span class="nl" onclick="sc('sec-prog')">Programa</span>
- <span class="nl" onclick="sc('sec-registo')">Registo</span>
+ <span class="nl act" onclick="sc('hero')">Introdução</span>
+ <div class="nl-dropdown">
+  <span class="nl">Região ▼</span>
+  <div class="nl-menu">
+   <span class="nl-item" onclick="filterRegiao('Portugal')">Portugal</span>
+   <span class="nl-item" onclick="filterRegiao('Espanha')">Espanha</span>
+  </div>
+ </div>
+ <div class="nl-dropdown">
+  <span class="nl">Ementa ▼</span>
+  <div class="nl-menu">
+   <span class="nl-item" onclick="filterTipo('Entradas')">Entradas</span>
+   <span class="nl-item" onclick="filterTipo('Carnes')">Carnes</span>
+   <span class="nl-item" onclick="filterTipo('Peixe')">Peixe</span>
+   <span class="nl-item" onclick="filterTipo('Sobremesa')">Sobremesa</span>
+   <span class="nl-item" onclick="filterTipo('Bebidas')">Bebidas</span>
+   <span class="nl-item" onclick="filterTipo('Pastelaria')">Pastelaria</span>
+  </div>
+ </div>
+ <div class="nl-dropdown">
+  <span class="nl">Escolas ▼</span>
+  <div class="nl-menu">
+   <span class="nl-item" onclick="filterEscola('Agostinho Roseta')">Agostinho Roseta</span>
+   <span class="nl-item" onclick="filterEscola('Agrícola Quintas da Lageosa')">Agrícola Quintas da Lageosa</span>
+   <span class="nl-item" onclick="filterEscola('Raia Idanha-a-Nova')">Raia Idanha-a-Nova</span>
+   <span class="nl-item" onclick="filterEscola('Região Alentejo')">Região Alentejo</span>
+   <span class="nl-item" onclick="filterEscola('Alter do Chão')">Alter do Chão</span>
+   <span class="nl-item" onclick="filterEscola('Escola Profissional do Fundão')">Escola Profissional do Fundão</span>
+   <span class="nl-item" onclick="filterEscola('IES San Fernando de Badajoz')">Instituto de Enseñanza Secundária "San Fernando" de Badajoz</span>
+   <span class="nl-item" onclick="filterEscola('IES Universidad Laboral de Cáceres')">IES Universidad Laboral de Cáceres</span>
+  </div>
+ </div>
  <span class="nl" onclick="sc('sec-ct')">Contacto</span>
  </nav>
  <button id="btn-adm" onclick="openAdm()"> Admin</button>
@@ -42,8 +69,6 @@
  <!-- pequenas pinceladas -->
  <ellipse cx="280" cy="50" rx="60" ry="20" fill="rgba(80,160,80,.08)" transform="rotate(30 280 50)"/>
  <ellipse cx="550" cy="170" rx="80" ry="25" fill="rgba(220,80,60,.07)" transform="rotate(-20 550 170)"/>
- <!-- linha divisória suave -->
- <line x1="520" y1="20" x2="520" y2="200" stroke="rgba(74,90,138,.1)" stroke-width="1"/>
  </svg>
 
  <!-- Lado esquerdo -->
@@ -140,117 +165,6 @@
  <div class="ti" style="padding-bottom:0"><div class="ttime">14:30</div><div class="ttit">Encerramento</div><div class="tdesc">Reflexão e entrega de certificados</div></div>
  </div>
  </div>
- </div>
-</section>
-
-<!-- REGISTO PÚBLICO -->
-<section id="sec-registo" class="sec">
- <div class="sec-in">
-  <span class="slabel">Participação</span>
-  <h2 class="st">Submeter Ficha Técnica</h2>
-  <p class="slead reg-intro">Preencha o formulário abaixo com a ficha técnica do seu prato para o showcooking. Após submissão, a ficha ficará pendente de aprovação pelo administrador.</p>
-
-  <div class="reg-success" id="reg-success">
-   <h3>Ficha submetida com sucesso!</h3>
-   <p>A sua ficha técnica foi registada e aguarda aprovação pelo administrador. Obrigado pela participação!</p>
-  </div>
-
-  <div class="reg-form-wrap" id="reg-form-wrap">
-   <div class="reg-escola-bar">
-    <span>FICHA TÉCNICA — SHOWCOOKING</span>
-    <span id="reg-nr-display">Nº ___</span>
-   </div>
-
-   <!-- Escola -->
-   <div class="fl2">
-    <label class="lbl" for="reg-escola">Escola</label>
-    <input type="text" id="reg-escola" placeholder="Nome da escola / turma"/>
-   </div>
-
-   <!-- Nome do Prato -->
-   <div class="fl2">
-    <label class="lbl" for="reg-prato">Nome do Prato *</label>
-    <input type="text" id="reg-prato" placeholder="Ex: Paella Valenciana"/>
-   </div>
-
-   <!-- Nº Porções / Forma de Preparação -->
-   <div class="frow2">
-    <div class="fl2">
-     <label class="lbl" for="reg-porcoes">Nº Porções (Pax)</label>
-     <input type="number" id="reg-porcoes" value="100" min="1"/>
-    </div>
-    <div class="fl2">
-     <label class="lbl" for="reg-forma">Forma de Preparação</label>
-     <input type="text" id="reg-forma" placeholder="Ex: Cozido, Grelhado..."/>
-    </div>
-   </div>
-
-   <!-- Tempo de Preparação / País -->
-   <div class="frow2">
-    <div class="fl2">
-     <label class="lbl" for="reg-tempo">Tempo de Preparação</label>
-     <input type="text" id="reg-tempo" placeholder="Ex: 45 min"/>
-    </div>
-    <div class="fl2">
-     <label class="lbl" for="reg-pais">País / Região *</label>
-     <input type="text" id="reg-pais" placeholder="Ex: Espanha"/>
-    </div>
-   </div>
-
-   <!-- INGREDIENTES -->
-   <div class="fl2">
-    <div class="fsec">Ingredientes</div>
-    <div style="display:grid;grid-template-columns:1fr 2fr 32px;gap:.4rem;margin-bottom:.3rem">
-     <span class="ing-head-lbl" style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mid)">Quantidade</span>
-     <span class="ing-head-lbl" style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mid)">Produto</span>
-     <span></span>
-    </div>
-    <div id="reg-irows">
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-     <div class="ing-grid"><input type="text" placeholder="Qtd."/><input type="text" placeholder="Produto"/><button class="rmb" onclick="regRmIng(this)">x</button></div>
-    </div>
-    <button class="addb" onclick="regAddIng()">+ Adicionar ingrediente</button>
-   </div>
-
-   <!-- PREPARAÇÃO/CONFECÇÃO -->
-   <div class="fl2">
-    <div class="fsec">Preparação / Confecção</div>
-    <div id="reg-srows">
-     <div class="step-grid"><div class="step-num">1</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">2</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">3</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">4</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">5</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">6</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">7</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">8</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">9</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">10</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">11</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-     <div class="step-grid"><div class="step-num">12</div><input type="text" placeholder="Descreva o passo..."/><button class="rmb" onclick="regRmStep(this)">x</button></div>
-    </div>
-    <button class="addb" onclick="regAddStep()">+ Adicionar passo</button>
-   </div>
-
-   <!-- MATERIAL NECESSÁRIO -->
-   <div class="fl2">
-    <div class="fsec">Material Necessário</div>
-    <textarea id="reg-material" placeholder="Liste o equipamento e utensílios necessários..."></textarea>
-   </div>
-
-   <div class="reg-pending" id="reg-pending">A sua ficha foi submetida e aguarda aprovação pelo administrador.</div>
-
-   <button class="sub" onclick="regSubmit()">Submeter Ficha Técnica</button>
-  </div>
  </div>
 </section>
 

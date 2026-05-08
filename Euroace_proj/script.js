@@ -73,8 +73,9 @@ function renderFichas(){
  const grid=document.getElementById('fg');grid.innerHTML='';
  const data=dbGet();
  if(!data.length){
- grid.innerHTML=`<div class="empty"><div style="font-size:3rem;opacity:.3"></div><p style="margin-top:.5rem">Ainda não há fichas.<br>Use o painel Admin para adicionar.</p></div>`;
- return;
+   updateFichasVisibility();
+   grid.innerHTML=`<div class="empty"><div style="font-size:3rem;opacity:.3"></div><p style="margin-top:.5rem">Ainda não há fichas.<br>Use o painel Admin para adicionar.</p></div>`;
+   return;
  }
  data.forEach((f,idx)=>{
  // Ingredientes rows
@@ -147,6 +148,17 @@ function renderFichas(){
  </div>`;
  grid.appendChild(card);
  });
+ updateFichasVisibility();
+}
+
+function updateFichasVisibility(){
+ const hasPublished=dbGet().length>0;
+ const section=document.getElementById('sec-fichas');
+ const nav=document.getElementById('nav-showcooking');
+ const btn=document.querySelector('.hero-btns .bp');
+ if(section) section.style.display = hasPublished ? 'block' : 'none';
+ if(nav) nav.style.display = hasPublished ? 'inline-flex' : 'none';
+ if(btn) btn.style.display = hasPublished ? 'inline-flex' : 'none';
 }
 
 function printFicha(id){
@@ -187,7 +199,7 @@ function printFicha(id){
  w.document.close();w.print();
 }
 function removeF(id){if(!confirm('Remover esta ficha?'))return;dbSet(dbGet().filter(f=>f.id!==id));renderFichas();showToast('Ficha removida.','#ef4444')}
-renderFichas();initScroll();initCounters();
+renderFichas();updateFichasVisibility();initScroll();initCounters();
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdm()});
 
 // ── REGISTO PÚBLICO ──
@@ -314,4 +326,18 @@ function rejectPending(id){
   dbSetPending(dbGetPending().filter(x=>x.id!==id));
   renderPendingBadge();showPending();
   showToast('Ficha rejeitada.','#ef4444');
+}
+
+// Funções de filtro por região, escola e tipo
+function filterRegiao(regiao){
+  console.log('Filtrar por região:', regiao);
+  sc('sec-fichas');
+}
+function filterEscola(escola){
+  console.log('Filtrar por escola:', escola);
+  sc('sec-fichas');
+}
+function filterTipo(tipo){
+  console.log('Filtrar por tipo:', tipo);
+  sc('sec-fichas');
 }
