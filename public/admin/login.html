@@ -16,12 +16,12 @@
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
         button { width: 100%; padding: 12px; background: #45c974; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
         .error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 8px; margin-top: 10px; display: none; text-align: center; }
-        .info { text-align: center; margin-top: 20px; font-size: 12px; color: #999; }
         .carousel-dots { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 2; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; }
         .dot.active { background: white; }
         @media (max-width: 480px) { .login { margin: 20px; padding: 30px 20px; } }
     </style>
+<script src="../config.js"></script>
 </head>
 <body>
     <div class="carousel-bg" id="carouselBg"></div>
@@ -34,13 +34,15 @@
             <button type="submit">Entrar</button>
         </form>
         <div id="error" class="error"></div>
-        <div class="info">Utilizadores: admin/Euroace2025, chef/chef123, cozinha/cozinha2025, epf/epf2025, convidado/visitante</div>
     </div>
     <div class="carousel-dots" id="carouselDots"></div>
     <script>
-        const API_URL = 'http://localhost:3005/api';
+        // Usar a URL correta do backend
+        const API_URL = window.API_URL || 'https://euroace.onrender.com/api';
+        
         const imagens = ['../assets/carousel/epf1.jpg', '../assets/carousel/epf3.jpg', '../assets/carousel/epf4.jpg', '../assets/carousel/epf5.jpg'];
         let slideAtual = 0, intervalId = null;
+        
         function criarSlides() {
             const container = document.getElementById('carouselBg');
             const dotsContainer = document.getElementById('carouselDots');
@@ -60,6 +62,7 @@
                 dotsContainer.appendChild(dot);
             });
         }
+        
         function irParaSlide(index) {
             const slides = document.querySelectorAll('.carousel-slide');
             const dots = document.querySelectorAll('.dot');
@@ -70,6 +73,7 @@
             dots[index].classList.add('active');
             slideAtual = index;
         }
+        
         function proximoSlide() { irParaSlide(slideAtual + 1); }
         function iniciarCarrossel() { criarSlides(); intervalId = setInterval(proximoSlide, 5000); }
         
@@ -77,6 +81,8 @@
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            
             try {
                 const res = await fetch(`${API_URL}/login`, {
                     method: 'POST',
@@ -89,15 +95,17 @@
                     localStorage.setItem('user', JSON.stringify({ username: data.user.username, role: data.user.role || 'admin' }));
                     window.location.href = 'dashboard.html';
                 } else {
-                    document.getElementById('error').textContent = data.error || 'Erro no login';
-                    document.getElementById('error').style.display = 'block';
-                    setTimeout(() => document.getElementById('error').style.display = 'none', 3000);
+                    errorDiv.textContent = data.error || 'Erro no login';
+                    errorDiv.style.display = 'block';
+                    setTimeout(() => errorDiv.style.display = 'none', 3000);
                 }
             } catch(e) {
-                document.getElementById('error').textContent = 'Erro de conexão';
-                document.getElementById('error').style.display = 'block';
+                errorDiv.textContent = 'Erro de conexão com o servidor';
+                errorDiv.style.display = 'block';
+                setTimeout(() => errorDiv.style.display = 'none', 3000);
             }
         });
+        
         window.addEventListener('DOMContentLoaded', iniciarCarrossel);
     </script>
 </body>

@@ -10,7 +10,6 @@
         .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; }
         h1 { color: #24449b; margin-bottom: 10px; }
         .user-info { background: #e8eaf0; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .user-role { font-size: 0.8rem; background: #45c974; color: white; padding: 3px 10px; border-radius: 20px; }
         .logout { background: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
         .message { padding: 10px; border-radius: 8px; margin-bottom: 20px; display: none; }
         .success { background: #d4edda; color: #155724; display: block; }
@@ -30,120 +29,94 @@
         .btn-delete { background: #e74c3c; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; }
         .btn-edit { background: #3498db; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; margin-right: 10px; }
         h2 { color: #24449b; margin: 20px 0 10px; font-size: 1.2rem; }
-        .permission-denied { text-align: center; padding: 3rem; color: #e74c3c; }
     </style>
+<script src="../config.js"></script>
 </head>
 <body>
     <div class="container">
-        <div id="permission-denied" style="display:none;" class="permission-denied">
-            <h2>⛔ Acesso Negado</h2>
-            <p>Você não tem permissão para acessar esta área.</p>
-            <button onclick="logout()" class="logout">Sair</button>
+        <div class="user-info">
+            <div><strong id="user-name"></strong></div>
+            <button class="logout" onclick="logout()">Sair</button>
         </div>
         
-        <div id="admin-content">
-            <div class="user-info">
-                <div><strong id="user-name"></strong> <span id="user-role" class="user-role"></span></div>
-                <button class="logout" onclick="logout()">Sair</button>
+        <h1>📝 Área Administrativa</h1>
+        <div id="message" class="message"></div>
+        
+        <form id="receitaForm">
+            <input type="hidden" id="editId">
+            <div class="row">
+                <div><label>Nº Ficha *</label><input type="text" id="numero_ficha" required></div>
+                <div><label>Nome do Prato *</label><input type="text" id="nome_prato" required></div>
+            </div>
+            <div class="row">
+                <div><label>Categoria *</label>
+                    <select id="categoria" required>
+                        <option value="entrada">🍽️ Entrada</option>
+                        <option value="carne">🥩 Prato de Carne</option>
+                        <option value="peixe">🐟 Prato de Peixe</option>
+                        <option value="sobremesa">🍰 Sobremesa</option>
+                    </select>
+                </div>
+                <div><label>Nº Porções</label><input type="number" id="numero_porcoes" value="4"></div>
+            </div>
+            <div class="row">
+                <div><label>Tempo Preparação</label><input type="text" id="tempo_preparacao" placeholder="Ex: 45 minutos"></div>
+                <div><label>Forma Preparação</label><input type="text" id="forma_preparacao" placeholder="Ex: Assado"></div>
             </div>
             
-            <h1>📝 Área Administrativa</h1>
-            <div id="message" class="message"></div>
-            
-            <form id="receitaForm" style="display:none;">
-                <input type="hidden" id="editId">
-                <div class="row">
-                    <div><label>Nº Ficha *</label><input type="text" id="numero_ficha" required></div>
-                    <div><label>Nome do Prato *</label><input type="text" id="nome_prato" required></div>
+            <h2>🍽️ Ingredientes</h2>
+            <div id="ingredientes-container">
+                <div class="ingrediente-item">
+                    <input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1">
+                    <input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2">
+                    <button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button>
                 </div>
-                <div class="row">
-                    <div><label>Categoria *</label>
-                        <select id="categoria" required>
-                            <option value="entrada">🍽️ Entrada</option>
-                            <option value="carne">🥩 Prato de Carne</option>
-                            <option value="peixe">🐟 Prato de Peixe</option>
-                            <option value="sobremesa">🍰 Sobremesa</option>
-                        </select>
-                    </div>
-                    <div><label>Nº Porções</label><input type="number" id="numero_porcoes" value="4"></div>
-                </div>
-                <div class="row">
-                    <div><label>Tempo Preparação</label><input type="text" id="tempo_preparacao" placeholder="Ex: 45 minutos"></div>
-                    <div><label>Forma Preparação</label><input type="text" id="forma_preparacao" placeholder="Ex: Assado"></div>
-                </div>
-                
-                <h2>🍽️ Ingredientes</h2>
-                <div id="ingredientes-container">
-                    <div class="ingrediente-item">
-                        <input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1">
-                        <input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2">
-                        <button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button>
-                    </div>
-                </div>
-                <button type="button" class="btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
-                
-                <h2>👨‍🍳 Preparação</h2>
-                <div id="preparacao-container">
-                    <div class="passo-item">
-                        <input type="text" class="passo-input" placeholder="Passo 1" style="flex:1">
-                    </div>
-                </div>
-                <button type="button" class="btn-add" onclick="adicionarPasso()">+ Adicionar Passo</button>
-                
-                <h2>🔧 Material Necessário</h2>
-                <textarea id="material_necessario" placeholder="Liste os utensílios e materiais..."></textarea>
-                
-                <h2>📸 Imagem do Prato</h2>
-                <input type="file" id="imagem" accept="image/*">
-                
-                <button type="submit" class="btn-submit">💾 Salvar Receita</button>
-            </form>
-            
-            <div class="receitas-lista">
-                <h2>📋 Receitas Cadastradas</h2>
-                <div id="lista-receitas"></div>
             </div>
+            <button type="button" class="btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
+            
+            <h2>👨‍🍳 Preparação</h2>
+            <div id="preparacao-container">
+                <div class="passo-item">
+                    <input type="text" class="passo-input" placeholder="Passo 1" style="flex:1">
+                </div>
+            </div>
+            <button type="button" class="btn-add" onclick="adicionarPasso()">+ Adicionar Passo</button>
+            
+            <h2>🔧 Material Necessário</h2>
+            <textarea id="material_necessario" placeholder="Liste os utensílios e materiais..."></textarea>
+            
+            <h2>📸 Imagem do Prato</h2>
+            <input type="file" id="imagem" accept="image/*">
+            
+            <button type="submit" class="btn-submit">💾 Salvar Receita</button>
+        </form>
+        
+        <div class="receitas-lista">
+            <h2>📋 Receitas Cadastradas</h2>
+            <div id="lista-receitas"></div>
         </div>
     </div>
     
     <script>
-        const API_URL = 'http://localhost:3005/api';
+        const API_URL = window.API_URL || 'https://euroace.onrender.com/api';
         const token = localStorage.getItem('token');
-        let userRole = null;
         let userName = null;
         
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+        
         async function verificarPermissao() {
-            if (!token) {
-                window.location.href = 'login.html';
-                return;
-            }
-            
             try {
-                // Tentar obter informações do usuário (simplificado)
-                // Por enquanto, vamos permitir acesso e verificar role via localStorage
                 const userStr = localStorage.getItem('user');
                 if (userStr) {
                     const user = JSON.parse(userStr);
-                    userRole = user.role || 'admin';
                     userName = user.username;
                 } else {
-                    userRole = 'admin';
-                    userName = 'admin';
+                    userName = 'Admin';
                 }
-                
                 document.getElementById('user-name').textContent = userName;
-                document.getElementById('user-role').textContent = userRole === 'admin' ? 'Administrador' : (userRole === 'editor' ? 'Editor' : 'Visualizador');
-                
-                // Verificar permissões
-                if (userRole === 'viewer') {
-                    document.getElementById('permission-denied').style.display = 'block';
-                    document.getElementById('admin-content').style.display = 'none';
-                    return;
-                }
-                
-                document.getElementById('receitaForm').style.display = 'block';
                 carregarReceitas();
-                
             } catch(e) {
                 console.error('Erro:', e);
             }
@@ -166,7 +139,7 @@
                     <div><strong>${r.nome_prato}</strong><br><small>Ficha ${r.numero_ficha} | ${r.categoria}</small></div>
                     <div>
                         <button class="btn-edit" onclick="editarReceita(${r.id})">✏️ Editar</button>
-                        ${userRole !== 'viewer' ? `<button class="btn-delete" onclick="deletarReceita(${r.id})">🗑️ Excluir</button>` : ''}
+                        <button class="btn-delete" onclick="deletarReceita(${r.id})">🗑️ Excluir</button>
                     </div>
                 </div>
             `).join('');
