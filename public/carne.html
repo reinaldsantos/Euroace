@@ -89,7 +89,6 @@
             .back-header { flex-wrap: wrap; }
         }
     </style>
-<script src="config.js"></script>
 </head>
 <body>
     <div class="site-shell">
@@ -123,7 +122,7 @@
     </div>
 
     <script>
-        const API_URL = 'https://euroace.onrender.com';
+        const API_URL = 'http://euroace.onrender.com';
         
         function abrirModal(r) {
             const imgUrl = r.imagem_filename ? `${API_URL}/uploads/${r.imagem_filename}` : '';
@@ -174,8 +173,7 @@
                         li { margin: 5px 0; }
                         .footer { text-align: center; margin-top: 30px; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
                     </style>
-                <script src="config.js"></script>
-</head>
+                </head>
                 <body>
                     <h1>${r.nome_prato}</h1>
                     ${imgUrl ? `<div class="img-container"><img src="${imgUrl}" alt="${r.nome_prato}"></div>` : ''}
