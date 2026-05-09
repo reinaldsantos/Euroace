@@ -2,13 +2,17 @@ services:
   - type: web
     name: euroace-backend
     runtime: node
+    repo: https://github.com/reinaldsantos/Euroace
+    branch: main
     plan: free
     buildCommand: cd backend && npm install
     startCommand: cd backend && node server.js
     envVars:
       - key: PORT
-        value: 3005
+        value: 10000
       - key: JWT_SECRET
         generateValue: true
       - key: NODE_ENV
         value: production
+      - key: NODE_VERSION
+        value: 20.18.1
