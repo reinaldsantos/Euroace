@@ -48,6 +48,7 @@
                 <div><label>Nome do Prato *</label><input type="text" id="nome_prato" required></div>
             </div>
             <div class="row">
+                <div><label>Escola</label><input type="text" id="escola" placeholder="Nome da escola" value="Geral"></div>
                 <div><label>Categoria *</label>
                     <select id="categoria" required>
                         <option value="entrada">🍽️ Entrada</option>
@@ -108,9 +109,7 @@
                 const userName = userStr ? JSON.parse(userStr).username : 'Admin';
                 document.getElementById('user-name').textContent = userName;
                 carregarReceitas();
-            } catch(e) {
-                console.error('Erro:', e);
-            }
+            } catch(e) { console.error('Erro:', e); }
         }
         
         function logout() {
@@ -131,7 +130,7 @@
             }
             container.innerHTML = todasReceitas.map(r => `
                 <div class="receita-item">
-                    <div><strong>${r.nome_prato}</strong><br><small>Ficha ${r.numero_ficha} | ${r.categoria}</small></div>
+                    <div><strong>${r.nome_prato}</strong><br><small>Ficha ${r.numero_ficha} | ${r.categoria} | ${r.escola || 'Geral'}</small></div>
                     <div>
                         <button class="btn-edit" onclick="editarReceita(${r.id})">✏️ Editar</button>
                         <button class="btn-delete" onclick="deletarReceita(${r.id})">🗑️ Excluir</button>
@@ -146,6 +145,7 @@
             document.getElementById('editId').value = receita.id;
             document.getElementById('numero_ficha').value = receita.numero_ficha;
             document.getElementById('nome_prato').value = receita.nome_prato;
+            document.getElementById('escola').value = receita.escola || 'Geral';
             document.getElementById('categoria').value = receita.categoria;
             document.getElementById('numero_porcoes').value = receita.numero_porcoes;
             document.getElementById('tempo_preparacao').value = receita.tempo_preparacao || '';
@@ -189,9 +189,7 @@
                 } else {
                     mostrarMensagem('Erro ao excluir', 'error');
                 }
-            } catch (error) {
-                mostrarMensagem('Erro ao excluir', 'error');
-            }
+            } catch (error) { mostrarMensagem('Erro ao excluir', 'error'); }
         }
         
         function adicionarIngrediente() {
@@ -202,9 +200,7 @@
             container.appendChild(div);
         }
         
-        function removerIngrediente(btn) {
-            if (document.querySelectorAll('#ingredientes-container .ingrediente-item').length > 1) btn.parentElement.remove();
-        }
+        function removerIngrediente(btn) { if (document.querySelectorAll('#ingredientes-container .ingrediente-item').length > 1) btn.parentElement.remove(); }
         
         function adicionarPasso() {
             const container = document.getElementById('preparacao-container');
@@ -245,6 +241,7 @@
         function limparForm() {
             document.getElementById('editId').value = '';
             document.getElementById('receitaForm').reset();
+            document.getElementById('escola').value = 'Geral';
             document.getElementById('ingredientes-container').innerHTML = '<div class="ingrediente-item"><input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1"><input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2"><button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button></div>';
             document.getElementById('preparacao-container').innerHTML = '<div class="passo-item"><input type="text" class="passo-input" placeholder="Passo 1" style="flex:1"></div>';
         }
@@ -262,6 +259,7 @@
             const formData = new FormData();
             formData.append('numero_ficha', document.getElementById('numero_ficha').value);
             formData.append('nome_prato', document.getElementById('nome_prato').value);
+            formData.append('escola', document.getElementById('escola').value);
             formData.append('categoria', document.getElementById('categoria').value);
             formData.append('numero_porcoes', document.getElementById('numero_porcoes').value);
             formData.append('tempo_preparacao', document.getElementById('tempo_preparacao').value);
@@ -275,14 +273,12 @@
             try {
                 let response;
                 if (editId) {
-                    // UPDATE - usar PUT
                     response = await fetch(`${API_URL}/receitas/${editId}`, {
                         method: 'PUT',
                         headers: { 'Authorization': `Bearer ${token}` },
                         body: formData
                     });
                 } else {
-                    // CREATE - usar POST
                     response = await fetch(`${API_URL}/receitas`, {
                         method: 'POST',
                         headers: { 'Authorization': `Bearer ${token}` },
