@@ -117,3 +117,52 @@ router.delete('/receitas/:id', authMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+
+// ATUALIZAR RECEITA (PUT)
+router.put('/receitas/:id', authMiddleware, upload.single('imagem'), async (req, res) => {
+    const { id } = req.params;
+    const { numero_ficha, nome_prato, categoria, numero_porcoes, tempo_preparacao, 
+            forma_preparacao, ingredientes, preparacao, material_necessario } = req.body;
+    const imagem_filename = req.file ? req.file.filename : null;
+    
+    try {
+        // Se houver nova imagem, apagar a antiga
+        if (imagem_filename) {
+            const old = await db.query("SELECT imagem_filename FROM receitas WHERE id = $1", [id]);
+            if (old.rows[0] && old.rows[0].imagem_filename) {
+                const oldPath = path.join(uploadDir, old.rows[0].imagem_filename);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        }
+        
+        // Construir a query de atualização
+        let query = `UPDATE receitas SET 
+            numero_ficha = $1, 
+            nome_prato = $2, 
+            categoria = $3, 
+            numero_porcoes = $4,
+            tempo_preparacao = $5, 
+            forma_preparacao = $6, 
+            ingredientes = $7, 
+            preparacao = $8, 
+            material_necessario = $9`;
+        let params = [numero_ficha, nome_prato, categoria, numero_porcoes, 
+                      tempo_preparacao, forma_preparacao, ingredientes, preparacao, material_necessario];
+        
+        if (imagem_filename) {
+            query += `, imagem_filename = $10`;
+            params.push(imagem_filename);
+            query += ` WHERE id = $11`;
+            params.push(id);
+        } else {
+            query += ` WHERE id = $10`;
+            params.push(id);
+        }
+        
+        await db.query(query, params);
+        res.json({ message: 'Receita atualizada com sucesso!' });
+    } catch (err) {
+        console.error('Erro ao atualizar:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
