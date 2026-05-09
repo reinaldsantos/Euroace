@@ -11,15 +11,17 @@
         .hero { width: 100%; background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
         .hero img { width: 100%; height: auto; object-fit: contain; display: block; }
         .hero-divider { height: 2px; background: linear-gradient(90deg, #24449b, #45c974, #3a5bc7); width: 100%; }
+        
+        /* MENU PRINCIPAL */
         .nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: clamp(1rem, 5vw, 5rem); flex-wrap: wrap; padding: .9rem 1rem; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; background: linear-gradient(90deg, rgba(69,201,116,.95), rgba(255,255,255,.9) 24%, rgba(248,197,49,.5) 47%, rgba(231,71,62,.85)); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0,0,0,.08); }
         .nav a, .nav .dropbtn { transition: transform .2s ease, color .2s ease; color: #333; text-decoration: none; background: none; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; cursor: pointer; font-family: inherit; }
         .nav a:hover, .nav .dropbtn:hover { color: #24449b; transform: translateY(-2px); }
         
         /* DROPDOWN MENU */
         .dropdown { position: relative; display: inline-block; }
-        .dropbtn { background: transparent; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; color: #333; cursor: pointer; transition: transform .2s ease, color .2s ease; font-family: inherit; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 250px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 8px; z-index: 1; overflow: hidden; margin-top: 0.5rem; }
-        .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-align: left; text-decoration: none; }
+        .dropbtn { background: transparent; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; color: #333; cursor: pointer; font-family: inherit; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 8px; z-index: 1; overflow: hidden; margin-top: 0.5rem; }
+        .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
         .dropdown:hover .dropdown-content { display: block; }
@@ -46,21 +48,33 @@
         
         .contact { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; }
         .contact-items { display: grid; gap: .6rem; color: #24449b; font-weight: 700; font-size: 0.9rem; }
-        .footer { background: #1a1a2e; color: #8a8fa8; text-align: center; padding: 2rem; margin-top: 2rem; }
-        .footer a { color: #45c974; text-decoration: none; }
-        .logo-strip { background: white; padding: 1rem; text-align: center; }
-        .logo-strip img { max-height: 80px; }
         
-        /* Lista de escolas - submenu */
-        .escolas-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
+        /* FOOTER ORIGINAL */
+        .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
+        .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
+        .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 4rem; max-width: 1400px; margin: 0 auto; }
+        .footer h2, .footer h3 { color: #f1f1f1; font-weight: 300; }
+        .footer h2 span { color: #45c974; }
+        .footer ul { list-style: none; padding: 0; margin: 0; }
+        .footer li { border-bottom: 1px dashed rgba(255,255,255,.18); padding: .7rem 0; }
+        .footer a { color: inherit; text-decoration: none; }
+        .footer a:hover { color: white; }
+        .socials { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .socials a { width: 42px; height: 42px; display: grid; place-items: center; background: #45c974; color: white; border-radius: 50%; text-decoration: none; }
+        .newsletter { display: grid; gap: .8rem; margin: 1rem 0; }
+        .newsletter input { padding: 0.8rem; font-size: 1rem; border: 0; border-radius: 8px; }
+        .newsletter button { width: fit-content; border: 0; background: #45c974; color: white; font-weight: 800; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; }
+        .admin-link { margin-top: 1rem; color: white; font-weight: 700; display: inline-block; text-decoration: none; }
+        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
+        .logo-strip img { max-height: 100px; object-fit: contain; }
+        
+        .escolas-list { max-height: 300px; overflow-y: auto; }
         
         @media (max-width: 850px) {
-            .grid-two, .categorias-grid { grid-template-columns: 1fr; }
+            .grid-two, .categorias-grid, .footer-content { grid-template-columns: 1fr; }
             .contact { flex-direction: column; align-items: flex-start; }
             main { padding: 1rem; }
+            .footer-content { padding: 2rem 1.5rem; gap: 2rem; }
         }
     </style>
 </head>
@@ -72,7 +86,17 @@
         <nav class="nav">
             <a href="#introducao">Introdução</a>
             <a href="#regiao">Região</a>
-            <a href="#ementa">Ementa</a>
+            <!-- DROPDOWN EMENTA -->
+            <div class="dropdown">
+                <button class="dropbtn">Ementa ▼</button>
+                <div class="dropdown-content">
+                    <a href="entrada.html">🍽️ Entradas</a>
+                    <a href="carne.html">🥩 Pratos de Carne</a>
+                    <a href="peixe.html">🐟 Pratos de Peixe</a>
+                    <a href="sobremesa.html">🍰 Sobremesas</a>
+                </div>
+            </div>
+            <!-- DROPDOWN ESCOLAS -->
             <div class="dropdown">
                 <button class="dropbtn">Escolas ▼</button>
                 <div class="dropdown-content escolas-list">
@@ -84,7 +108,6 @@
                     <a href="#">🏫 Escola Profissional do Fundão</a>
                     <a href="#">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
                     <a href="#">🏫 IES Universidad Laboral de Cáceres</a>
-                    <a href="#">🏫 Escola Profissional do Fundão</a>
                 </div>
             </div>
             <a href="#contacto">Contacto</a>
@@ -139,8 +162,44 @@
         </main>
 
         <footer class="footer">
-            <div class="logo-strip"><img src="assets/images/footer.png" alt="Logótipos"></div>
-            <p style="margin-top:1rem;"><a href="admin/login.html">⚙️ Área administrativa</a></p>
+            <div class="footer-angle"></div>
+            <div class="footer-content">
+                <div>
+                    <h2>somos<span>EPF</span></h2>
+                    <p>Com experiência na formação e no desenvolvimento de projetos educativos, promovemos competências, inovação e valor para a comunidade.</p>
+                    <div class="socials"><a href="#">f</a><a href="#">◎</a></div>
+                </div>
+                <div>
+                    <h3>Menu</h3>
+                    <ul>
+                        <li><a href="#introducao">Introdução</a></li>
+                        <li><a href="#regiao">Região</a></li>
+                        <li><a href="#ementa">Ementa</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Oferta Formativa</h3>
+                    <ul>
+                        <li><a href="#">Cursos Profissionais</a></li>
+                        <li><a href="#">Cursos CEF</a></li>
+                        <li><a href="#">Outras Ofertas Formativas</a></li>
+                        <li><a href="#">Alumni e Parceiros</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Newsletter</h3>
+                    <p>Inscreva-se para receber informações e novidades do projeto.</p>
+                    <form class="newsletter" onsubmit="return false;">
+                        <input type="email" placeholder="seu e-mail" aria-label="Email">
+                        <button type="submit">Subscrever</button>
+                    </form>
+                    <a class="admin-link" href="admin/login.html">⚙️ Área administrativa</a>
+                </div>
+            </div>
+            <div class="logo-strip">
+                <img src="assets/images/footer.png" alt="Logótipos dos parceiros e entidades financiadoras">
+            </div>
         </footer>
     </div>
 </body>
