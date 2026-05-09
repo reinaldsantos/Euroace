@@ -194,7 +194,7 @@
                 const response = await fetch(API_URL + '/receitas');
                 if (!response.ok) throw new Error('Erro na resposta');
                 const todas = await response.json();
-                const receitas = todas.filter(r => r.categoria === 'entrada');
+                const receitas = todas.filter(r => r.categoria === 'sobremesa');
                 const container = document.getElementById('receitas');
                 
                 if (receitas.length === 0) {
