@@ -1,2 +1,2 @@
-// Configuração da API - será substituída pelo ambiente
-window.API_URL = window.API_URL || 'http://localhost:3005/api';
+// Configuração da API para produção
+window.API_URL = 'https://euroace.onrender.com/api';

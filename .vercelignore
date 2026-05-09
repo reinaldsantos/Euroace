@@ -1,0 +1,7 @@
+frontend_backup/
+backend/
+node_modules/
+.git/
+README.md
+*.db
+uploads/
