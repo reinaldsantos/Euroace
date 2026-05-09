@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste API EuroACE</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Teste de Conexão com o Backend</h1>
+    <div id="resultado">Carregando...</div>
+    <div id="receitas"></div>
+    
+    <script>
+        const API_URL = 'https://euroace.onrender.com/api';
+        
+        async function testar() {
+            try {
+                const res = await fetch(API_URL + '/receitas');
+                const dados = await res.json();
+                document.getElementById('resultado').innerHTML = '✅ Conexão OK! ' + dados.length + ' receitas encontradas.';
+                
+                let html = '<h2>Receitas:</h2><ul>';
+                for (const r of dados) {
+                    html += '<li><strong>' + r.nome_prato + '</strong> - ' + r.categoria + ' - ' + (r.ingredientes ? r.ingredientes.length : 0) + ' ingredientes</li>';
+                }
+                html += '</ul>';
+                document.getElementById('receitas').innerHTML = html;
+            } catch(e) {
+                document.getElementById('resultado').innerHTML = '❌ Erro: ' + e.message;
+            }
+        }
+        
+        testar();
+    </script>
+</body>
+</html>
