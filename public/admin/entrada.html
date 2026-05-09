@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entradas - EuroACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        :root {
+            --azul: #24449b;
+            --azul-claro: #3a5bc7;
+            --verde: #45c974;
+            --cinza-bg: #f4f5f8;
+            --cinza-card: #ffffff;
+            --texto: #1a1a2e;
+            --texto-suave: #6b7280;
+            --borda: #e8eaf0;
+            --sombra: 0 4px 20px rgba(36,68,155,0.08);
+            --sombra-hover: 0 16px 40px rgba(36,68,155,0.16);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cinza-bg); color: var(--texto); }
+        .site-shell { width: 100%; background: white; min-height: 100vh; }
+        
+        .hero { width: 100%; background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
+        .hero img { width: 100%; height: auto; object-fit: contain; display: block; }
+        .hero-divider { height: 2px; background: linear-gradient(90deg, var(--azul) 0%, var(--verde) 50%, var(--azul-claro) 100%); width: 100%; }
+        
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        main { padding: 1.5rem 0 2rem; }
+        
+        .page-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--borda); position: relative; }
+        .page-header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--verde); border-radius: 2px; }
+        .page-header-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(36,68,155,0.06); color: var(--azul); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.8rem; border-radius: 20px; border: 1px solid rgba(36,68,155,0.15); margin-bottom: 0.7rem; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--azul); letter-spacing: -0.5px; line-height: 1.15; }
+        .page-header p { color: var(--texto-suave); font-size: 0.85rem; margin-top: 0.4rem; font-weight: 300; }
+        
+        .stats-bar { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; padding: 0.6rem 1.5rem; background: var(--cinza-bg); border-radius: 12px; }
+        .stat-item { text-align: center; display: flex; flex-direction: column; gap: 0.2rem; }
+        .stat-number { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--azul); font-weight: 700; }
+        .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texto-suave); font-weight: 500; }
+        
+        .filtros-bar { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
+        .filtro-label { font-size: 0.7rem; font-weight: 600; color: var(--texto-suave); text-transform: uppercase; letter-spacing: 0.05em; }
+        .filtro-btn { padding: 0.3rem 0.8rem; border-radius: 20px; border: 1.5px solid var(--borda); background: white; color: var(--texto-suave); font-size: 0.68rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+        .filtro-btn:hover, .filtro-btn.active { background: var(--azul); color: white; border-color: var(--azul); }
+        .search-wrap { margin-left: auto; position: relative; }
+        .search-wrap input { padding: 0.35rem 1rem 0.35rem 2rem; border-radius: 20px; border: 1.5px solid var(--borda); font-family: 'DM Sans', sans-serif; font-size: 0.7rem; outline: none; width: 160px; }
+        .search-wrap input:focus { border-color: var(--azul); }
+        .search-wrap::before { content: '🔍'; position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); font-size: 0.65rem; pointer-events: none; }
+        
+        .receitas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .receita-card { background: var(--cinza-card); border-radius: 18px; overflow: hidden; box-shadow: var(--sombra); border: 1px solid var(--borda); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; cursor: pointer; }
+        .receita-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-hover); }
+        .receita-imagem { width: 100%; height: 200px; overflow: hidden; background: linear-gradient(135deg, #e8eaf0 0%, #d0d5e8 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+        .receita-imagem img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+        .placeholder-icon { font-size: 3rem; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: linear-gradient(135deg, #e8eaf0 0%, #d0d5e8 100%); }
+        .img-badge { position: absolute; top: 0.6rem; right: 0.6rem; background: rgba(255,255,255,0.92); color: var(--azul); font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 10px; }
+        .ficha-num { position: absolute; top: 0.6rem; left: 0.6rem; background: var(--azul); color: white; font-size: 0.62rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 10px; }
+        .receita-info { padding: 1rem 1.2rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
+        .receita-info h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--azul); margin-bottom: 0.5rem; }
+        .receita-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+        .meta-chip { display: inline-flex; align-items: center; gap: 0.2rem; background: var(--cinza-bg); color: var(--texto-suave); font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.5rem; border-radius: 8px; border: 1px solid var(--borda); }
+        .receita-ingredientes { font-size: 0.78rem; color: var(--texto-suave); line-height: 1.4; padding: 0.6rem; background: var(--cinza-bg); border-radius: 10px; margin-bottom: 0.8rem; flex: 1; }
+        .receita-ingredientes strong { color: var(--texto); font-weight: 600; display: block; margin-bottom: 0.2rem; font-size: 0.68rem; text-transform: uppercase; }
+        .btn-ver { background: var(--verde); color: white; border: none; padding: 0.6rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.75rem; font-weight: 600; transition: all 0.25s ease; width: 100%; }
+        .btn-ver:hover { background: var(--azul); transform: translateY(-1px); }
+        .btn-pdf { background: #e74c3c; color: white; border: none; padding: 0.6rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.75rem; font-weight: 600; transition: all 0.25s ease; width: 100%; margin-top: 0.5rem; }
+        .btn-pdf:hover { background: #c0392b; transform: translateY(-1px); }
+        .btn-group { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .btn-group .btn-ver, .btn-group .btn-pdf { margin-top: 0; width: 50%; }
+        .empty-message { grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: var(--texto-suave); font-size: 0.9rem; }
+        
+        .footer { background: white; margin-top: 2rem; width: 100%; }
+        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
+        .logo-strip img { max-height: 100px; object-fit: contain; width: auto; }
+        
+        /* ESTILOS PARA PDF */
+        .pdf-content {
+            font-family: 'DM Sans', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+        }
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--verde);
+            padding-bottom: 1rem;
+        }
+        .pdf-header h1 { color: var(--azul); font-size: 1.8rem; }
+        .pdf-header p { color: var(--texto-suave); }
+        .pdf-img { text-align: center; margin: 1rem 0; }
+        .pdf-img img { max-width: 100%; max-height: 300px; border-radius: 12px; }
+        .pdf-section { margin: 1.5rem 0; }
+        .pdf-section h3 { color: var(--azul); border-bottom: 2px solid var(--verde); padding-bottom: 0.3rem; margin-bottom: 1rem; }
+        .pdf-ingredientes { list-style: none; padding: 0; }
+        .pdf-ingredientes li { padding: 0.3rem 0; border-bottom: 1px solid #eee; }
+        .pdf-preparacao { padding-left: 1.5rem; }
+        .pdf-preparacao li { margin: 0.5rem 0; }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(10,12,30,0.82); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1.5rem; backdrop-filter: blur(4px); }
+        .modal-container { background: white; max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto; border-radius: 22px; position: relative; }
+        .modal-header { position: sticky; top: 0; background: white; padding: 1rem 1.5rem 0.6rem; border-bottom: 1px solid var(--borda); display: flex; align-items: center; justify-content: space-between; }
+        .modal-header h2 { font-family: 'Playfair Display', serif; color: var(--azul); font-size: 1.2rem; }
+        .modal-close { background: var(--cinza-bg); color: var(--texto-suave); border: 1px solid var(--borda); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+        .modal-close:hover { background: #e74c3c; color: white; }
+        .modal-body { padding: 1.2rem 1.5rem 1.8rem; }
+        .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 14px; margin-bottom: 1rem; }
+        .modal-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+        .modal-chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.7rem; background: rgba(36,68,155,0.06); color: var(--azul); border-radius: 10px; font-size: 0.72rem; }
+        .modal-section-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--azul); margin-bottom: 0.5rem; border-bottom: 1px solid var(--borda); padding-bottom: 0.3rem; }
+        .modal-section ul, .modal-section ol { margin-left: 1.2rem; }
+        .modal-section li { padding: 0.25rem 0; font-size: 0.82rem; border-bottom: 1px solid #f5f5f5; }
+        
+        @media (max-width: 850px) {
+            .container { padding: 0 1rem; }
+            .receitas-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .page-header h1 { font-size: 1.6rem; }
+            .stats-bar { gap: 1rem; padding: 0.5rem 1rem; }
+            .search-wrap { margin-left: 0; width: 100%; }
+            .search-wrap input { width: 100%; }
+            .hero { padding: 5px 0; }
+            .logo-strip img { max-height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-shell">
+        <div class="hero"><img src="assets/images/euroace.png" alt="EuroACE" onerror="this.src='assets/images/header.png'; this.onerror='';"></div>
+        <div class="hero-divider"></div>
+        
+        <div class="container">
+            <main>
+                <div class="page-header">
+                    <div class="page-header-badge">🍽️ EuroACE 2025 · Dia da Europa</div>
+                    <h1>Entradas</h1>
+                    <p>Receitas tradicionais e produtos regionais para começar a refeição</p>
+                </div>
+                <div class="stats-bar" id="stats-bar" style="display:none;">
+                    <div class="stat-item"><span class="stat-number" id="stat-total">0</span><span class="stat-label">Receitas</span></div>
+                    <div class="stat-item"><span class="stat-number" id="stat-porcoes">0</span><span class="stat-label">Porções médias</span></div>
+                    <div class="stat-item"><span class="stat-number" id="stat-ingredientes">0</span><span class="stat-label">Ingredientes</span></div>
+                </div>
+                <div class="filtros-bar" id="filtros-bar" style="display:none;">
+                    <span class="filtro-label">Ordenar:</span>
+                    <button class="filtro-btn active" onclick='ordenar("nome", this)'>A–Z</button>
+                    <button class="filtro-btn" onclick='ordenar("porcoes", this)'>Porções</button>
+                    <button class="filtro-btn" onclick='ordenar("ficha", this)'>Nº Ficha</button>
+                    <div class="search-wrap"><input type="text" id="search-input" placeholder="Pesquisar..." oninput="pesquisar(this.value)"></div>
+                </div>
+                <div id="receitas" class="receitas-grid"><div style="grid-column:1/-1; text-align:center; padding:4rem;">⏳ Carregando receitas...</div></div>
+            </main>
+        </div>
+        
+        <footer class="footer">
+            <div class="logo-strip">
+                <img src="assets/images/footer.png" alt="Logótipos dos parceiros e entidades financiadoras" onerror="this.style.display='none'">
+            </div>
+        </footer>
+    </div>
+    <div id="modal" class="modal-overlay" style="display:none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <button class="modal-close" onclick="fecharModal()">×</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+    <script>
+        const API_URL = 'http://localhost:3005';
+        let todasReceitas = [];
+
+        async function carregarReceitas() {
+            try {
+                const res = await fetch(`${API_URL}/api/receitas`);
+                const todas = await res.json();
+                todasReceitas = todas.filter(r => r.categoria === 'entrada');
+                renderReceitas(todasReceitas);
+                preencherStats(todasReceitas);
+                document.getElementById('stats-bar').style.display = 'flex';
+                document.getElementById('filtros-bar').style.display = 'flex';
+            } catch(e) {
+                document.getElementById('receitas').innerHTML = `<div class="empty-message">⚠️ Erro ao carregar receitas.<br>Verifique o backend em ${API_URL}</div>`;
+            }
+        }
+
+        function renderReceitas(lista) {
+            const container = document.getElementById('receitas');
+            if (!lista.length) {
+                container.innerHTML = `<div class="empty-message">📭 Nenhuma receita encontrada em Entradas.</div>`;
+                return;
+            }
+            container.innerHTML = lista.map((r, i) => {
+                const imgUrl = r.imagem_filename ? `${API_URL}/uploads/${r.imagem_filename}` : '';
+                const ingPrev = (r.ingredientes || []).slice(0, 4).map(i => `${i.quantidade} ${i.produto}`).join(' · ');
+                return `
+                    <div class="receita-card">
+                        <div class="receita-imagem" onclick='abrirModal(${JSON.stringify(r).replace(/'/g, "\\'")})'>
+                            ${imgUrl ? `<img src="${imgUrl}" alt="${r.nome_prato}" onerror="this.parentElement.innerHTML='<div class=\'placeholder-icon\'>🍽️</div>'">` : '<div class="placeholder-icon">🍽️</div>'}
+                            <span class="ficha-num">#${r.numero_ficha}</span>
+                            <span class="img-badge">Entrada</span>
+                        </div>
+                        <div class="receita-info">
+                            <h2>${r.nome_prato}</h2>
+                            <div class="receita-meta">
+                                <span class="meta-chip">👥 ${r.numero_porcoes} porções</span>
+                                ${r.tempo_preparacao ? `<span class="meta-chip">⏱️ ${r.tempo_preparacao}</span>` : ''}
+                            </div>
+                            <div class="receita-ingredientes"><strong>Ingredientes</strong>${ingPrev || '—'}</div>
+                            <div class="btn-group">
+                                <button class="btn-ver" onclick='abrirModal(${JSON.stringify(r).replace(/'/g, "\\'")})'>Ver receita →</button>
+                                <button class="btn-pdf" onclick='baixarPDF(${JSON.stringify(r).replace(/'/g, "\\'")})'>📄 Baixar PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function preencherStats(lista) {
+            document.getElementById('stat-total').textContent = lista.length;
+            const mediaPorc = lista.length ? Math.round(lista.reduce((s, r) => s + (parseInt(r.numero_porcoes) || 0), 0) / lista.length) : 0;
+            document.getElementById('stat-porcoes').textContent = mediaPorc;
+            const todos = new Set(lista.flatMap(r => (r.ingredientes || []).map(i => i.produto.toLowerCase())));
+            document.getElementById('stat-ingredientes').textContent = todos.size;
+        }
+
+        function ordenar(por, btn) {
+            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const sorted = [...todasReceitas].sort((a, b) => {
+                if (por === 'nome') return a.nome_prato.localeCompare(b.nome_prato);
+                if (por === 'porcoes') return (parseInt(b.numero_porcoes)||0) - (parseInt(a.numero_porcoes)||0);
+                if (por === 'ficha') return (parseInt(a.numero_ficha)||0) - (parseInt(b.numero_ficha)||0);
+                return 0;
+            });
+            renderReceitas(sorted);
+        }
+
+        function pesquisar(q) {
+            const termo = q.toLowerCase();
+            const filtradas = todasReceitas.filter(r => r.nome_prato.toLowerCase().includes(termo) || (r.ingredientes || []).some(i => i.produto.toLowerCase().includes(termo)));
+            renderReceitas(filtradas);
+        }
+
+        function abrirModal(r) {
+            const imgUrl = r.imagem_filename ? `${API_URL}/uploads/${r.imagem_filename}` : '';
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-title').innerHTML = r.nome_prato;
+            document.getElementById('modal-body').innerHTML = `
+                ${imgUrl ? `<img class="modal-img" src="${imgUrl}" alt="${r.nome_prato}" onerror="this.remove()">` : ''}
+                <div class="modal-chips">
+                    <span class="modal-chip">📋 Ficha Nº ${r.numero_ficha}</span>
+                    <span class="modal-chip">👥 ${r.numero_porcoes} porções</span>
+                    ${r.tempo_preparacao ? `<span class="modal-chip">⏱️ ${r.tempo_preparacao}</span>` : ''}
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">📝 Ingredientes</div>
+                    <ul>${(r.ingredientes || []).map(i => `<li><strong>${i.quantidade}</strong> ${i.produto}</li>`).join('')}</ul>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">👨‍🍳 Modo de Preparação</div>
+                    <ol>${(r.preparacao || []).map(p => `<li>${p.descricao}</li>`).join('')}</ol>
+                </div>
+                ${r.material_necessario ? `<div class="modal-section"><div class="modal-section-title">🔧 Material Necessário</div><p>${r.material_necessario}</p></div>` : ''}
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button class="btn-pdf" onclick="baixarPDF(${JSON.stringify(r).replace(/'/g, "\\'")}); fecharModal();" style="width: auto; padding: 0.5rem 1.5rem;">📄 Baixar Receita em PDF</button>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function baixarPDF(r) {
+            const imgUrl = r.imagem_filename ? `${API_URL}/uploads/${r.imagem_filename}` : '';
+            
+            const pdfContent = `
+                <div class="pdf-content">
+                    <div class="pdf-header">
+                        <h1>${r.nome_prato}</h1>
+                        <p>Ficha Técnica - EuroACE 2025 | Dia da Europa</p>
+                    </div>
+                    ${imgUrl ? `<div class="pdf-img"><img src="${imgUrl}" alt="${r.nome_prato}"></div>` : ''}
+                    <div class="pdf-info" style="display: flex; gap: 1rem; justify-content: center; margin: 1rem 0;">
+                        <span>📋 Ficha Nº ${r.numero_ficha}</span>
+                        <span>👥 ${r.numero_porcoes} porções</span>
+                        ${r.tempo_preparacao ? `<span>⏱️ ${r.tempo_preparacao}</span>` : ''}
+                        ${r.forma_preparacao ? `<span>🔥 ${r.forma_preparacao}</span>` : ''}
+                    </div>
+                    <div class="pdf-section">
+                        <h3>📝 Ingredientes</h3>
+                        <ul class="pdf-ingredientes">
+                            ${(r.ingredientes || []).map(i => `<li><strong>${i.quantidade}</strong> ${i.produto}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="pdf-section">
+                        <h3>👨‍🍳 Modo de Preparação</h3>
+                        <ol class="pdf-preparacao">
+                            ${(r.preparacao || []).map(p => `<li>${p.descricao}</li>`).join('')}
+                        </ol>
+                    </div>
+                    ${r.material_necessario ? `<div class="pdf-section"><h3>🔧 Material Necessário</h3><p>${r.material_necessario}</p></div>` : ''}
+                    <div class="pdf-footer" style="margin-top: 2rem; text-align: center; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 1rem;">
+                        <p>EuroACE 2025 - Dia da Europa | Pratos de Boa Memória | receitas com alma</p>
+                    </div>
+                </div>
+            `;
+            
+            const element = document.createElement('div');
+            element.innerHTML = pdfContent;
+            document.body.appendChild(element);
+            
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5],
+                filename: `${r.nome_prato.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element.firstChild).save().then(() => {
+                document.body.removeChild(element);
+            });
+        }
+
+        carregarReceitas();
+    </script>
+</body>
+</html>

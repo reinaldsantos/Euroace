@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EuroACE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f0f0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; }
+        h1 { color: #24449b; margin-bottom: 10px; }
+        .user-info { background: #e8eaf0; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .user-role { font-size: 0.8rem; background: #45c974; color: white; padding: 3px 10px; border-radius: 20px; }
+        .logout { background: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+        .message { padding: 10px; border-radius: 8px; margin-bottom: 20px; display: none; }
+        .success { background: #d4edda; color: #155724; display: block; }
+        .error { background: #f8d7da; color: #721c24; display: block; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        textarea { min-height: 80px; }
+        .row { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .row > div { flex: 1; }
+        .btn-add { background: #3498db; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin: 10px 0; }
+        .btn-submit { background: #45c974; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 20px; font-size: 16px; }
+        .ingrediente-item, .passo-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+        .btn-remove { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .receitas-lista { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
+        .receita-item { background: #f8f9fa; border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-delete { background: #e74c3c; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+        .btn-edit { background: #3498db; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; margin-right: 10px; }
+        h2 { color: #24449b; margin: 20px 0 10px; font-size: 1.2rem; }
+        .permission-denied { text-align: center; padding: 3rem; color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="permission-denied" style="display:none;" class="permission-denied">
+            <h2>⛔ Acesso Negado</h2>
+            <p>Você não tem permissão para acessar esta área.</p>
+            <button onclick="logout()" class="logout">Sair</button>
+        </div>
+        
+        <div id="admin-content">
+            <div class="user-info">
+                <div><strong id="user-name"></strong> <span id="user-role" class="user-role"></span></div>
+                <button class="logout" onclick="logout()">Sair</button>
+            </div>
+            
+            <h1>📝 Área Administrativa</h1>
+            <div id="message" class="message"></div>
+            
+            <form id="receitaForm" style="display:none;">
+                <input type="hidden" id="editId">
+                <div class="row">
+                    <div><label>Nº Ficha *</label><input type="text" id="numero_ficha" required></div>
+                    <div><label>Nome do Prato *</label><input type="text" id="nome_prato" required></div>
+                </div>
+                <div class="row">
+                    <div><label>Categoria *</label>
+                        <select id="categoria" required>
+                            <option value="entrada">🍽️ Entrada</option>
+                            <option value="carne">🥩 Prato de Carne</option>
+                            <option value="peixe">🐟 Prato de Peixe</option>
+                            <option value="sobremesa">🍰 Sobremesa</option>
+                        </select>
+                    </div>
+                    <div><label>Nº Porções</label><input type="number" id="numero_porcoes" value="4"></div>
+                </div>
+                <div class="row">
+                    <div><label>Tempo Preparação</label><input type="text" id="tempo_preparacao" placeholder="Ex: 45 minutos"></div>
+                    <div><label>Forma Preparação</label><input type="text" id="forma_preparacao" placeholder="Ex: Assado"></div>
+                </div>
+                
+                <h2>🍽️ Ingredientes</h2>
+                <div id="ingredientes-container">
+                    <div class="ingrediente-item">
+                        <input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1">
+                        <input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2">
+                        <button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="adicionarIngrediente()">+ Adicionar Ingrediente</button>
+                
+                <h2>👨‍🍳 Preparação</h2>
+                <div id="preparacao-container">
+                    <div class="passo-item">
+                        <input type="text" class="passo-input" placeholder="Passo 1" style="flex:1">
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="adicionarPasso()">+ Adicionar Passo</button>
+                
+                <h2>🔧 Material Necessário</h2>
+                <textarea id="material_necessario" placeholder="Liste os utensílios e materiais..."></textarea>
+                
+                <h2>📸 Imagem do Prato</h2>
+                <input type="file" id="imagem" accept="image/*">
+                
+                <button type="submit" class="btn-submit">💾 Salvar Receita</button>
+            </form>
+            
+            <div class="receitas-lista">
+                <h2>📋 Receitas Cadastradas</h2>
+                <div id="lista-receitas"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:3005/api';
+        const token = localStorage.getItem('token');
+        let userRole = null;
+        let userName = null;
+        
+        async function verificarPermissao() {
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                // Tentar obter informações do usuário (simplificado)
+                // Por enquanto, vamos permitir acesso e verificar role via localStorage
+                const userStr = localStorage.getItem('user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    userRole = user.role || 'admin';
+                    userName = user.username;
+                } else {
+                    userRole = 'admin';
+                    userName = 'admin';
+                }
+                
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-role').textContent = userRole === 'admin' ? 'Administrador' : (userRole === 'editor' ? 'Editor' : 'Visualizador');
+                
+                // Verificar permissões
+                if (userRole === 'viewer') {
+                    document.getElementById('permission-denied').style.display = 'block';
+                    document.getElementById('admin-content').style.display = 'none';
+                    return;
+                }
+                
+                document.getElementById('receitaForm').style.display = 'block';
+                carregarReceitas();
+                
+            } catch(e) {
+                console.error('Erro:', e);
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+        
+        let todasReceitas = [];
+        
+        async function carregarReceitas() {
+            const response = await fetch(`${API_URL}/receitas`);
+            todasReceitas = await response.json();
+            const container = document.getElementById('lista-receitas');
+            container.innerHTML = todasReceitas.map(r => `
+                <div class="receita-item">
+                    <div><strong>${r.nome_prato}</strong><br><small>Ficha ${r.numero_ficha} | ${r.categoria}</small></div>
+                    <div>
+                        <button class="btn-edit" onclick="editarReceita(${r.id})">✏️ Editar</button>
+                        ${userRole !== 'viewer' ? `<button class="btn-delete" onclick="deletarReceita(${r.id})">🗑️ Excluir</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function editarReceita(id) {
+            const receita = todasReceitas.find(r => r.id === id);
+            if (!receita) return;
+            document.getElementById('editId').value = receita.id;
+            document.getElementById('numero_ficha').value = receita.numero_ficha;
+            document.getElementById('nome_prato').value = receita.nome_prato;
+            document.getElementById('categoria').value = receita.categoria;
+            document.getElementById('numero_porcoes').value = receita.numero_porcoes;
+            document.getElementById('tempo_preparacao').value = receita.tempo_preparacao || '';
+            document.getElementById('forma_preparacao').value = receita.forma_preparacao || '';
+            document.getElementById('material_necessario').value = receita.material_necessario || '';
+            
+            const ingredientesContainer = document.getElementById('ingredientes-container');
+            ingredientesContainer.innerHTML = '';
+            (receita.ingredientes || []).forEach(ing => {
+                const div = document.createElement('div');
+                div.className = 'ingrediente-item';
+                div.innerHTML = `<input type="text" placeholder="Quantidade" class="ingrediente-qtd" value="${ing.quantidade}" style="flex:1"><input type="text" placeholder="Produto" class="ingrediente-produto" value="${ing.produto}" style="flex:2"><button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button>`;
+                ingredientesContainer.appendChild(div);
+            });
+            if (receita.ingredientes.length === 0) adicionarIngrediente();
+            
+            const preparacaoContainer = document.getElementById('preparacao-container');
+            preparacaoContainer.innerHTML = '';
+            (receita.preparacao || []).forEach((p, idx) => {
+                const div = document.createElement('div');
+                div.className = 'passo-item';
+                div.innerHTML = `<input type="text" class="passo-input" placeholder="Passo ${idx+1}" value="${p.descricao}" style="flex:1"><button type="button" class="btn-remove" onclick="removerPasso(this)">✖</button>`;
+                preparacaoContainer.appendChild(div);
+            });
+            if (receita.preparacao.length === 0) adicionarPasso();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        async function deletarReceita(id) {
+            if (!confirm('Tem certeza que deseja excluir esta receita?')) return;
+            try {
+                const response = await fetch(`${API_URL}/receitas/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    mostrarMensagem('Receita excluída com sucesso!', 'success');
+                    carregarReceitas();
+                    limparForm();
+                } else {
+                    mostrarMensagem('Erro ao excluir', 'error');
+                }
+            } catch (error) {
+                mostrarMensagem('Erro ao excluir', 'error');
+            }
+        }
+        
+        function adicionarIngrediente() {
+            const container = document.getElementById('ingredientes-container');
+            const div = document.createElement('div');
+            div.className = 'ingrediente-item';
+            div.innerHTML = '<input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1"><input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2"><button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button>';
+            container.appendChild(div);
+        }
+        
+        function removerIngrediente(btn) {
+            if (document.querySelectorAll('#ingredientes-container .ingrediente-item').length > 1) {
+                btn.parentElement.remove();
+            }
+        }
+        
+        function adicionarPasso() {
+            const container = document.getElementById('preparacao-container');
+            const num = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'passo-item';
+            div.innerHTML = `<input type="text" class="passo-input" placeholder="Passo ${num}" style="flex:1"><button type="button" class="btn-remove" onclick="removerPasso(this)">✖</button>`;
+            container.appendChild(div);
+        }
+        
+        function removerPasso(btn) {
+            if (document.querySelectorAll('#preparacao-container .passo-item').length > 1) {
+                btn.parentElement.remove();
+                document.querySelectorAll('#preparacao-container .passo-item').forEach((item, idx) => {
+                    item.querySelector('.passo-input').placeholder = `Passo ${idx + 1}`;
+                });
+            }
+        }
+        
+        function getIngredientes() {
+            const ingredientes = [];
+            document.querySelectorAll('#ingredientes-container .ingrediente-item').forEach(item => {
+                const qtd = item.querySelector('.ingrediente-qtd').value;
+                const produto = item.querySelector('.ingrediente-produto').value;
+                if (qtd || produto) ingredientes.push({ quantidade: qtd, produto });
+            });
+            return ingredientes;
+        }
+        
+        function getPreparacao() {
+            const preparacao = [];
+            document.querySelectorAll('#preparacao-container .passo-input').forEach((input, idx) => {
+                if (input.value.trim()) {
+                    preparacao.push({ numero: idx + 1, descricao: input.value });
+                }
+            });
+            return preparacao;
+        }
+        
+        function limparForm() {
+            document.getElementById('editId').value = '';
+            document.getElementById('receitaForm').reset();
+            document.getElementById('ingredientes-container').innerHTML = '<div class="ingrediente-item"><input type="text" placeholder="Quantidade" class="ingrediente-qtd" style="flex:1"><input type="text" placeholder="Produto" class="ingrediente-produto" style="flex:2"><button type="button" class="btn-remove" onclick="removerIngrediente(this)">✖</button></div>';
+            document.getElementById('preparacao-container').innerHTML = '<div class="passo-item"><input type="text" class="passo-input" placeholder="Passo 1" style="flex:1"></div>';
+        }
+        
+        function mostrarMensagem(msg, tipo) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.className = `message ${tipo}`;
+            msgDiv.textContent = msg;
+            setTimeout(() => msgDiv.className = 'message', 3000);
+        }
+        
+        document.getElementById('receitaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('editId').value;
+            const formData = new FormData();
+            formData.append('numero_ficha', document.getElementById('numero_ficha').value);
+            formData.append('nome_prato', document.getElementById('nome_prato').value);
+            formData.append('categoria', document.getElementById('categoria').value);
+            formData.append('numero_porcoes', document.getElementById('numero_porcoes').value);
+            formData.append('tempo_preparacao', document.getElementById('tempo_preparacao').value);
+            formData.append('forma_preparacao', document.getElementById('forma_preparacao').value);
+            formData.append('ingredientes', JSON.stringify(getIngredientes()));
+            formData.append('preparacao', JSON.stringify(getPreparacao()));
+            formData.append('material_necessario', document.getElementById('material_necessario').value);
+            const imagem = document.getElementById('imagem').files[0];
+            if (imagem) formData.append('imagem', imagem);
+            
+            try {
+                const url = editId ? `${API_URL}/receitas/${editId}?_method=PUT` : `${API_URL}/receitas`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    mostrarMensagem(editId ? 'Receita atualizada!' : 'Receita salva!', 'success');
+                    limparForm();
+                    carregarReceitas();
+                } else {
+                    mostrarMensagem(data.error || 'Erro ao salvar', 'error');
+                }
+            } catch (error) {
+                mostrarMensagem('Erro ao salvar', 'error');
+            }
+        });
+        
+        verificarPermissao();
+    </script>
+</body>
+</html>

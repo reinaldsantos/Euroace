@@ -13,6 +13,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
+      role TEXT DEFAULT 'admin',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -22,6 +23,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       numero_ficha TEXT UNIQUE,
       nome_prato TEXT NOT NULL,
+      categoria TEXT DEFAULT 'entrada',
       numero_porcoes INTEGER,
       pax INTEGER DEFAULT 100,
       tempo_preparacao TEXT,
@@ -35,30 +37,42 @@ db.serialize(() => {
     )
   `);
 
-  db.get("SELECT * FROM users WHERE username = 'admin'", (err, row) => {
-    if (err) {
-      console.error('Erro ao verificar admin:', err.message);
-      return;
-    }
-    
-    if (!row) {
-      const hash = bcrypt.hashSync('Euroace2025', 10);
-      db.run(
-        "INSERT INTO users (username, password_hash) VALUES (?, ?)",
-        ['admin', hash],
-        (err) => {
-          if (err) {
-            console.error('Erro ao criar admin:', err.message);
-          } else {
-            console.log('✅ Usuário admin criado com sucesso!');
-            console.log('   Usuário: admin');
-            console.log('   Senha: Euroace2025');
+  // Todos os utilizadores como admin
+  const admins = [
+    { username: 'admin', password: 'Euroace2025', role: 'admin' },
+    { username: 'chef', password: 'chef123', role: 'admin' },
+    { username: 'cozinha', password: 'cozinha2025', role: 'admin' },
+    { username: 'epf', password: 'epf2025', role: 'admin' },
+    { username: 'convidado', password: 'visitante', role: 'admin' }
+  ];
+
+  admins.forEach(admin => {
+    db.get("SELECT * FROM users WHERE username = ?", [admin.username], (err, row) => {
+      if (err) {
+        console.error('Erro ao verificar admin:', err.message);
+        return;
+      }
+      
+      if (!row) {
+        const hash = bcrypt.hashSync(admin.password, 10);
+        db.run(
+          "INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)",
+          [admin.username, hash, admin.role],
+          (err) => {
+            if (err) {
+              console.error('Erro ao criar admin:', err.message);
+            } else {
+              console.log(`✅ Usuário "${admin.username}" criado com sucesso!`);
+              console.log(`   Senha: ${admin.password} | Role: ${admin.role}`);
+            }
           }
-        }
-      );
-    } else {
-      console.log('✅ Usuário admin já existe');
-    }
+        );
+      } else {
+        // Atualizar role para admin se não for
+        db.run("UPDATE users SET role = 'admin' WHERE username = ?", [admin.username]);
+        console.log(`✅ Usuário "${admin.username}" já existe (role atualizada para admin)`);
+      }
+    });
   });
 
   console.log('✅ Banco de dados SQLite inicializado com sucesso!');

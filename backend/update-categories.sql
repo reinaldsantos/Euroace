@@ -1,0 +1,3 @@
+-- Atualizar a coluna categoria para aceitar os novos valores
+-- Não é necessário alterar a tabela, apenas usar os novos valores:
+-- entrada, carne, peixe, sobremesa, pastelaria

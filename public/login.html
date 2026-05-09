@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - EuroACE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* CARROSSEL DE FUNDO */
+        .carousel-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Overlay escuro para melhor contraste */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* FORMULÁRIO BRANCO */
+        .login {
+            position: relative;
+            z-index: 2;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #24449b;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #45c974;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #45c974;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #3aad62;
+            transform: translateY(-2px);
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Indicadores do carrossel */
+        .carousel-dots {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        @media (max-width: 480px) {
+            .login {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CARROSSEL DE FUNDO -->
+    <div class="carousel-bg" id="carouselBg">
+        <!-- As imagens serão inseridas via JavaScript -->
+    </div>
+    <div class="overlay"></div>
+
+    <!-- FORMULÁRIO BRANCO -->
+    <div class="login">
+        <h1>🍽️ EuroACE Admin</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuário" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="error" class="error"></div>
+        <div class="info">Área administrativa - EuroACE 2025</div>
+    </div>
+
+    <!-- INDICADORES -->
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    <script>
+        const API_URL = 'http://localhost:3005/api';
+
+        // Configuração do carrossel
+        // Coloca aqui as imagens que queres usar no carrossel
+        const imagens = [
+            'assets/carousel/food1.jpg',
+            'assets/carousel/food2.jpg',
+            'assets/carousel/food3.jpg',
+            'assets/carousel/food4.jpg'
+        ];
+
+        // Imagens alternativas (placeholders caso não existam as imagens)
+        const placeholders = [
+            'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=1920&h=1080&fit=crop',
+            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1920&h=1080&fit=crop'
+        ];
+
+        let slideAtual = 0;
+        let intervalId = null;
+
+        function criarSlides() {
+            const container = document.getElementById('carouselBg');
+            const dotsContainer = document.getElementById('carouselDots');
+            
+            // Usar placeholders como fallback
+            const imagensUsar = imagens;
+            
+            imagensUsar.forEach((img, index) => {
+                // Criar slide
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                if (index === 0) slide.classList.add('active');
+                slide.style.backgroundImage = `url(${placeholders[index]})`;
+                
+                // Tentar carregar imagem local, se falhar usa placeholder
+                const testImg = new Image();
+                testImg.onload = () => {
+                    slide.style.backgroundImage = `url(${img})`;
+                };
+                testImg.src = img;
+                
+                container.appendChild(slide);
+                
+                // Criar dot
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => irParaSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function irParaSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (index >= slides.length) index = 0;
+            if (index < 0) index = slides.length - 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            slideAtual = index;
+        }
+
+        function proximoSlide() {
+            irParaSlide(slideAtual + 1);
+        }
+
+        function iniciarCarrossel() {
+            criarSlides();
+            intervalId = setInterval(proximoSlide, 5000);
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorDiv.textContent = data.error || 'Erro no login';
+                    errorDiv.style.display = 'block';
+                    setTimeout(() => errorDiv.style.display = 'none', 3000);
+                }
+            } catch(e) {
+                errorDiv.textContent = 'Erro de conexão com o servidor';
+                errorDiv.style.display = 'block';
+                setTimeout(() => errorDiv.style.display = 'none', 3000);
+            }
+        });
+
+        // Iniciar carrossel quando a página carregar
+        window.addEventListener('DOMContentLoaded', iniciarCarrossel);
+    </script>
+</body>
+</html>
