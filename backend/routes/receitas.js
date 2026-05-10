@@ -109,7 +109,7 @@ router.post('/receitas', authMiddleware, upload.single('imagem'), async (req, re
     const { numero_ficha, nome_prato, categoria, escola, numero_porcoes, tempo_preparacao, 
             forma_preparacao, ingredientes, preparacao, material_necessario } = req.body;
     const imagem_filename = req.file ? req.file.filename : null;
-    const categoriasValidas = ['entrada', 'carne', 'peixe', 'sobremesa'];
+    const categoriasValidas = ['entrada', 'carne', 'peixe', 'sobremesa', 'bebidas'];
     const categoriaFinal = categoriasValidas.includes(categoria) ? categoria : 'entrada';
     const escolaFinal = escola && escola.trim() !== '' ? escola : 'Geral';
     
