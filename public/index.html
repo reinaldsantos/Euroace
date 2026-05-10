@@ -7,26 +7,46 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e9e9e9; }
-        .site-shell {  max- background: white; min-height: 100vh; box-shadow: none; }
-        .hero {  background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
-        .hero img {  height: auto; object-fit: contain; display: block; }
-        .hero-divider { height: 2px; background: linear-gradient(90deg, #24449b, #45c974, #3a5bc7);  }
+        .site-shell { width: 100%; max-width: 100%; background: white; min-height: 100vh; box-shadow: none; }
+        .hero { width: 100%; background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
+        .hero img { width: 100%; height: auto; object-fit: contain; display: block; }
+        .hero-divider { height: 2px; background: linear-gradient(90deg, #24449b, #45c974, #3a5bc7); width: 100%; }
         
         .nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: clamp(1rem, 5vw, 5rem); flex-wrap: wrap; padding: .9rem 1rem; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; background: linear-gradient(90deg, rgba(69,201,116,.95), rgba(255,255,255,.9) 24%, rgba(248,197,49,.5) 47%, rgba(231,71,62,.85)); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0,0,0,.08); }
         .nav a, .nav .dropbtn { transition: transform .2s ease, color .2s ease; color: #333; text-decoration: none; background: none; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; cursor: pointer; font-family: inherit; }
         .nav a:hover, .nav .dropbtn:hover { color: #24449b; transform: translateY(-2px); }
         
+        /* DROPDOWN COM HOVER MAS COM DELAY PARA NÃO SUMIR RÁPIDO */
         .dropdown { position: relative; display: inline-block; }
         .dropbtn { background: transparent; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; color: #333; cursor: pointer; font-family: inherit; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 8px; z-index: 1; overflow: hidden; margin-top: 0.5rem; }
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background-color: white; 
+            min-width: 220px; 
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+            border-radius: 8px; 
+            z-index: 1; 
+            overflow: hidden; 
+            margin-top: 0.5rem;
+            transition-delay: 0s;
+        }
+        .dropdown:hover .dropdown-content { 
+            display: block; 
+        }
+        /* Para manter o menu aberto enquanto o mouse está sobre ele */
+        .dropdown-content:hover {
+            display: block;
+        }
         .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
-        .dropdown:hover .dropdown-content { display: block; }
         
         main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
         .section-card { background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08); border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem); box-shadow: 0 18px 50px rgba(0,0,0,.08); }
-        .intro-section { background: radial-gradient(circle at top left, rgba(69,201,116,.18), transparent 35%), radial-gradient(circle at bottom right, rgba(231,71,62,.14), transparent 40%); }
+        .intro-section { min-height: 45vh; display: grid; align-content: center; text-align: center; background: radial-gradient(circle at top left, rgba(69,201,116,.18), transparent 35%), radial-gradient(circle at bottom right, rgba(231,71,62,.14), transparent 40%); }
         .eyebrow { color: #24449b; text-transform: uppercase; letter-spacing: .16em; font-weight: 900; margin: 0 0 .6rem; font-size: 0.8rem; }
         h1, h2, h3, p { margin-top: 0; }
         h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: .98; margin-bottom: 1rem; }
@@ -38,21 +58,7 @@
         .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
         .highlight { background: linear-gradient(135deg, #f7fff9, #fff8f6); }
         
-        /* IMAGEM DO HORÁRIO - TAMANHO REDUZIDO */
-        .horario-container {
-            margin-top: 0.5rem;
-            
-            display: flex;
-            justify-content: center;
-        }
-        .horario-container img {
-            max-width: 25%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .categorias-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
+        .categorias-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
         .categoria-card { background: #f7f7f4; border-radius: 18px; padding: 1.2rem; text-align: center; text-decoration: none; transition: all 0.3s; border: 2px solid #e9ecef; }
         .categoria-card:hover { transform: translateY(-4px); border-color: #45c974; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
         .categoria-icon { font-size: 2rem; }
@@ -61,7 +67,7 @@
         .contact { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; }
         .contact-items { display: grid; gap: .6rem; color: #24449b; font-weight: 700; font-size: 0.9rem; }
         
-        .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem;  }
+        .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
         .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
         .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 4rem; max-width: 1400px; margin: 0 auto; }
         .footer h2, .footer h3 { color: #f1f1f1; font-weight: 300; }
@@ -76,7 +82,7 @@
         .newsletter input { padding: 0.8rem; font-size: 1rem; border: 0; border-radius: 8px; }
         .newsletter button { width: fit-content; border: 0; background: #45c974; color: white; font-weight: 800; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; }
         .admin-link { margin-top: 1rem; color: white; font-weight: 700; display: inline-block; text-decoration: none; }
-        .logo-strip { background: white; padding: 1rem 2rem; text-align: center;  }
+        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
         .logo-strip img { max-height: 100px; object-fit: contain; }
         
         .escolas-list { max-height: 300px; overflow-y: auto; }
@@ -86,8 +92,6 @@
             .contact { flex-direction: column; align-items: flex-start; }
             main { padding: 1rem; }
             .footer-content { padding: 2rem 1.5rem; gap: 2rem; }
-            .categorias-grid { grid-template-columns: repeat(2, 1fr); }
-            .horario-container img { max-width: 90%; }
         }
     </style>
 </head>
@@ -99,6 +103,7 @@
         <nav class="nav">
             <a href="#introducao">Introdução</a>
             <a href="#regiao">Região</a>
+            <!-- DROPDOWN EMENTA -->
             <div class="dropdown">
                 <button class="dropbtn">Ementa ▼</button>
                 <div class="dropdown-content">
@@ -109,6 +114,7 @@
                     <a href="bebidas.html">🥤 Bebidas</a>
                 </div>
             </div>
+            <!-- DROPDOWN ESCOLAS -->
             <div class="dropdown">
                 <button class="dropbtn">Escolas ▼</button>
                 <div class="dropdown-content escolas-list">
@@ -118,7 +124,7 @@
                     <a href="escola.html?nome=Região Alentejo">🏫 Região Alentejo</a>
                     <a href="escola.html?nome=Alter do Chão">🏫 Alter do Chão</a>
                     <a href="escola.html?nome=Escola Profissional do Fundão">🏫 Escola Profissional do Fundão</a>
-                    <a href="escola.html?nome=Instituto de Enseñanzia \"San Fernando\" de Badajoz">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
+                    <a href="escola.html?nome=Instituto de Enseñanzia "San Fernando" de Badajoz">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
                     <a href="escola.html?nome=IES Universidad Laboral de Cáceres">🏫 IES Universidad Laboral de Cáceres</a>
                 </div>
             </div>
@@ -126,18 +132,13 @@
         </nav>
 
         <main>
-            <section id="introducao" class="section-card intro-section">
+            <section id="introducao" class="intro-section section-card">
                 <p class="eyebrow">Euroace '26</p>
                 <h1>Proposta da Página Principal</h1>
                 <p>Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
                 <div class="actions">
                     <a class="btn primary" href="#ementa">Ver ementa</a>
                     <a class="btn secondary" href="#contacto">Contactar</a>
-                </div>
-                
-                <!-- IMAGEM DO HORÁRIO - TAMANHO REDUZIDO -->
-                <div class="horario-container">
-                    <img src="assets/images/horario.png" alt="Programação EuroACE 2025" onerror="this.parentElement.innerHTML='<div style=\"background:#f0f0f0; padding:2rem; text-align:center; border-radius:16px;\"><p style=\"color:#666;\">Programação disponível em breve</p></div>'">
                 </div>
             </section>
 
