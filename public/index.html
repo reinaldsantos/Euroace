@@ -16,33 +16,34 @@
         .nav a, .nav .dropbtn { transition: transform .2s ease, color .2s ease; color: #333; text-decoration: none; background: none; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; cursor: pointer; font-family: inherit; }
         .nav a:hover, .nav .dropbtn:hover { color: #24449b; transform: translateY(-2px); }
         
-        /* DROPDOWN COM HOVER MAS COM DELAY PARA NÃO SUMIR RÁPIDO */
         .dropdown { position: relative; display: inline-block; }
         .dropbtn { background: transparent; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; color: #333; cursor: pointer; font-family: inherit; }
-        .dropdown-content { 
-            display: none; 
-            position: absolute; 
-            top: 100%; 
-            left: 0; 
-            background-color: white; 
-            min-width: 220px; 
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
-            border-radius: 8px; 
-            z-index: 1; 
-            overflow: hidden; 
-            margin-top: 0.5rem;
-            transition-delay: 0s;
-        }
-        .dropdown:hover .dropdown-content { 
-            display: block; 
-        }
-        /* Para manter o menu aberto enquanto o mouse está sobre ele */
-        .dropdown-content:hover {
-            display: block;
-        }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 8px; z-index: 1; overflow: hidden; margin-top: 0.5rem; }
         .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: block; }
+        
+        /* INTRODUÇÃO COM IMAGEM LADO A LADO */
+        .intro-flex {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .intro-text {
+            flex: 1;
+        }
+        .intro-image {
+            flex: 1;
+            text-align: center;
+        }
+        .intro-image img {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
         
         main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
         .section-card { background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08); border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem); box-shadow: 0 18px 50px rgba(0,0,0,.08); }
@@ -92,6 +93,7 @@
             .contact { flex-direction: column; align-items: flex-start; }
             main { padding: 1rem; }
             .footer-content { padding: 2rem 1.5rem; gap: 2rem; }
+            .intro-flex { flex-direction: column; }
         }
     </style>
 </head>
@@ -103,7 +105,6 @@
         <nav class="nav">
             <a href="#introducao">Introdução</a>
             <a href="#regiao">Região</a>
-            <!-- DROPDOWN EMENTA -->
             <div class="dropdown">
                 <button class="dropbtn">Ementa ▼</button>
                 <div class="dropdown-content">
@@ -114,7 +115,6 @@
                     <a href="bebidas.html">🥤 Bebidas</a>
                 </div>
             </div>
-            <!-- DROPDOWN ESCOLAS -->
             <div class="dropdown">
                 <button class="dropbtn">Escolas ▼</button>
                 <div class="dropdown-content escolas-list">
@@ -124,7 +124,7 @@
                     <a href="escola.html?nome=Região Alentejo">🏫 Região Alentejo</a>
                     <a href="escola.html?nome=Alter do Chão">🏫 Alter do Chão</a>
                     <a href="escola.html?nome=Escola Profissional do Fundão">🏫 Escola Profissional do Fundão</a>
-                    <a href="escola.html?nome=Instituto de Enseñanzia "San Fernando" de Badajoz">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
+                    <a href="escola.html?nome=Instituto de Enseñanzia \"San Fernando\" de Badajoz">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
                     <a href="escola.html?nome=IES Universidad Laboral de Cáceres">🏫 IES Universidad Laboral de Cáceres</a>
                 </div>
             </div>
@@ -132,13 +132,20 @@
         </nav>
 
         <main>
-            <section id="introducao" class="intro-section section-card">
-                <p class="eyebrow">Euroace '26</p>
-                <h1>Proposta da Página Principal</h1>
-                <p>Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
-                <div class="actions">
-                    <a class="btn primary" href="#ementa">Ver ementa</a>
-                    <a class="btn secondary" href="#contacto">Contactar</a>
+            <section id="introducao" class="section-card">
+                <div class="intro-flex">
+                    <div class="intro-text">
+                        <p class="eyebrow">Euroace '26</p>
+                        <h1>Proposta da Página Principal</h1>
+                        <p>Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
+                        <div class="actions">
+                            <a class="btn primary" href="#ementa">Ver ementa</a>
+                            <a class="btn secondary" href="#contacto">Contactar</a>
+                        </div>
+                    </div>
+                    <div class="intro-image">
+                        <img src="assets/images/horario.png" alt="Programação EuroACE 2025">
+                    </div>
                 </div>
             </section>
 
