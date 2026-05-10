@@ -24,30 +24,9 @@
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
         .dropdown:hover .dropdown-content { display: block; }
         
-        /* INTRODUÇÃO COM IMAGEM LADO A LADO */
-        .intro-flex {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .intro-text {
-            flex: 1;
-        }
-        .intro-image {
-            flex: 1;
-            text-align: center;
-        }
-        .intro-image img {
-            width: 100%;
-            max-width: 100%;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
         main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
         .section-card { background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08); border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem); box-shadow: 0 18px 50px rgba(0,0,0,.08); }
-        .intro-section { min-height: 45vh; display: grid; align-content: center; text-align: center; background: radial-gradient(circle at top left, rgba(69,201,116,.18), transparent 35%), radial-gradient(circle at bottom right, rgba(231,71,62,.14), transparent 40%); }
+        .intro-section { background: radial-gradient(circle at top left, rgba(69,201,116,.18), transparent 35%), radial-gradient(circle at bottom right, rgba(231,71,62,.14), transparent 40%); }
         .eyebrow { color: #24449b; text-transform: uppercase; letter-spacing: .16em; font-weight: 900; margin: 0 0 .6rem; font-size: 0.8rem; }
         h1, h2, h3, p { margin-top: 0; }
         h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: .98; margin-bottom: 1rem; }
@@ -59,7 +38,21 @@
         .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
         .highlight { background: linear-gradient(135deg, #f7fff9, #fff8f6); }
         
-        .categorias-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
+        /* IMAGEM DO HORÁRIO DENTRO DO CARD */
+        .horario-container {
+            margin-top: 2rem;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .horario-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+        }
+        
+        .categorias-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
         .categoria-card { background: #f7f7f4; border-radius: 18px; padding: 1.2rem; text-align: center; text-decoration: none; transition: all 0.3s; border: 2px solid #e9ecef; }
         .categoria-card:hover { transform: translateY(-4px); border-color: #45c974; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
         .categoria-icon { font-size: 2rem; }
@@ -93,7 +86,7 @@
             .contact { flex-direction: column; align-items: flex-start; }
             main { padding: 1rem; }
             .footer-content { padding: 2rem 1.5rem; gap: 2rem; }
-            .intro-flex { flex-direction: column; }
+            .categorias-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -132,20 +125,18 @@
         </nav>
 
         <main>
-            <section id="introducao" class="section-card">
-                <div class="intro-flex">
-                    <div class="intro-text">
-                        <p class="eyebrow">Euroace '26</p>
-                        <h1>Proposta da Página Principal</h1>
-                        <p>Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
-                        <div class="actions">
-                            <a class="btn primary" href="#ementa">Ver ementa</a>
-                            <a class="btn secondary" href="#contacto">Contactar</a>
-                        </div>
-                    </div>
-                    <div class="intro-image">
-                        <img src="assets/images/horario.png" alt="Programação EuroACE 2025">
-                    </div>
+            <section id="introducao" class="section-card intro-section">
+                <p class="eyebrow">Euroace '26</p>
+                <h1>Proposta da Página Principal</h1>
+                <p>Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
+                <div class="actions">
+                    <a class="btn primary" href="#ementa">Ver ementa</a>
+                    <a class="btn secondary" href="#contacto">Contactar</a>
+                </div>
+                
+                <!-- IMAGEM DO HORÁRIO ABAIXO DO TEXTO, EXPANDIDA -->
+                <div class="horario-container">
+                    <img src="assets/images/horario.png" alt="Programação EuroACE 2025" onerror="this.parentElement.innerHTML='<div style=\"background:#f0f0f0; padding:2rem; text-align:center; border-radius:16px;\"><p style=\"color:#666;\">Programação disponível em breve</p></div>'">
                 </div>
             </section>
 
