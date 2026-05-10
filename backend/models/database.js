@@ -3,18 +3,12 @@ const bcrypt = require('bcrypt');
 
 let pool;
 
-// Configuração para Render ou local
 if (process.env.DATABASE_URL) {
-  // Render PostgreSQL
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    ssl: { rejectUnauthorized: false }
   });
 } else {
-  // Local development (usando SQLite ou PostgreSQL local)
-  // Se quiseres usar PostgreSQL local, descomenta as linhas abaixo
   pool = new Pool({
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
@@ -24,11 +18,9 @@ if (process.env.DATABASE_URL) {
   });
 }
 
-// Criar tabelas
 async function initDatabase() {
   const client = await pool.connect();
   try {
-    // Tabela de usuários
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -39,13 +31,13 @@ async function initDatabase() {
       )
     `);
 
-    // Tabela de receitas
     await client.query(`
       CREATE TABLE IF NOT EXISTS receitas (
         id SERIAL PRIMARY KEY,
         numero_ficha TEXT UNIQUE,
         nome_prato TEXT NOT NULL,
         categoria TEXT DEFAULT 'entrada',
+        escola TEXT DEFAULT 'Geral',
         numero_porcoes INTEGER,
         pax INTEGER DEFAULT 100,
         tempo_preparacao TEXT,
@@ -59,7 +51,18 @@ async function initDatabase() {
       )
     `);
 
-    // Inserir administradores padrão
+    // Forçar adição da coluna escola se não existir
+    await client.query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+          WHERE table_name='receitas' AND column_name='escola') THEN
+          ALTER TABLE receitas ADD COLUMN escola TEXT DEFAULT 'Geral';
+        END IF;
+      END $$;
+    `);
+
+    // Inserir administradores
     const admins = [
       { username: 'admin', password: 'Euroace2025', role: 'admin' },
       { username: 'chef', password: 'chef123', role: 'admin' },
@@ -76,15 +79,13 @@ async function initDatabase() {
           'INSERT INTO users (username, password_hash, role) VALUES ($1, $2, $3)',
           [admin.username, hash, admin.role]
         );
-        console.log(`✅ Usuário "${admin.username}" criado com sucesso!`);
-      } else {
-        console.log(`✅ Usuário "${admin.username}" já existe`);
+        console.log(`✅ Usuário "${admin.username}" criado`);
       }
     }
 
-    console.log('✅ Banco de dados PostgreSQL inicializado com sucesso!');
+    console.log('✅ Banco de dados PostgreSQL inicializado');
   } catch (err) {
-    console.error('Erro ao inicializar banco:', err.message);
+    console.error('Erro:', err.message);
   } finally {
     client.release();
   }
