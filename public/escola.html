@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas - EuroACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: #f4f5f8; color: #1a1a2e; }
+        .site-shell { width: 100%; background: white; min-height: 100vh; }
+        .hero { width: 100%; background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
+        .hero img { width: 100%; height: auto; object-fit: contain; display: block; }
+        .hero-divider { height: 2px; background: linear-gradient(90deg, #24449b, #45c974, #3a5bc7); width: 100%; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 2rem; }
+        .back-header { margin-bottom: 1.5rem; }
+        .btn-back { background: #24449b; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; text-decoration: none; display: inline-block; }
+        .btn-back:hover { background: #45c974; }
+        .page-header { text-align: center; margin-bottom: 2rem; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #24449b; }
+        .receitas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .receita-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: 0.3s; }
+        .receita-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .receita-imagem { width: 100%; height: 200px; overflow: hidden; background: #e8eaf0; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; }
+        .receita-imagem img { width: 100%; height: 100%; object-fit: cover; }
+        .placeholder-icon { font-size: 3rem; }
+        .ficha-num { position: absolute; top: 10px; left: 10px; background: #24449b; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; }
+        .receita-info { padding: 1rem; }
+        .receita-info h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #24449b; margin-bottom: 0.5rem; }
+        .receita-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .meta-chip { background: #f4f5f8; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; color: #666; }
+        .escola-chip { background: #45c974; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
+        .btn-group { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .btn-ver, .btn-pdf { flex: 1; padding: 8px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.75rem; transition: 0.3s; }
+        .btn-ver { background: #45c974; color: white; }
+        .btn-ver:hover { background: #24449b; }
+        .btn-pdf { background: #e74c3c; color: white; }
+        .btn-pdf:hover { background: #c0392b; }
+        .logo-strip { background: white; padding: 1rem; text-align: center; margin-top: 2rem; }
+        .logo-strip img { max-height: 80px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-container { background: white; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border-radius: 16px; padding: 1.5rem; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .modal-header h2 { font-family: 'Playfair Display', serif; color: #24449b; }
+        .modal-close { background: #e74c3c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+        .modal-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem; }
+        .modal-details { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .modal-detail { background: #f4f5f8; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
+        .modal-section { margin-bottom: 1rem; }
+        .modal-section h3 { color: #24449b; font-size: 1rem; margin-bottom: 0.5rem; border-left: 3px solid #45c974; padding-left: 8px; }
+        .modal-section ul, .modal-section ol { margin-left: 1.5rem; }
+        .modal-section li { margin: 0.3rem 0; }
+        @media (max-width: 768px) { .container { padding: 1rem; } .receitas-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="site-shell">
+        <div class="hero"><img src="assets/images/euroace.png" alt="EuroACE"></div>
+        <div class="hero-divider"></div>
+        <div class="container">
+            <div class="back-header"><a href="/" class="btn-back">← Voltar ao início</a></div>
+            <div class="page-header"><h1 id="escola-titulo">🏫 Carregando...</h1></div>
+            <div id="receitas" class="receitas-grid"><div style="text-align:center; padding:2rem;">Carregando receitas...</div></div>
+        </div>
+        <div class="logo-strip"><img src="assets/images/footer.png" alt="Parceiros"></div>
+    </div>
+    <div id="modal" class="modal-overlay"><div class="modal-container"><div class="modal-header"><h2 id="modal-title"></h2><button class="modal-close" onclick="fecharModal()">×</button></div><div id="modal-body"></div></div></div>
+    <script>
+        const API_URL = 'https://euroace.onrender.com/api';
+        const urlParams = new URLSearchParams(window.location.search);
+        const nomeEscola = decodeURIComponent(urlParams.get('nome') || '');
+        
+        document.getElementById('escola-titulo').innerHTML = '🏫 ' + nomeEscola;
+        
+        function abrirModal(r) {
+            const imgUrl = r.imagem_filename ? `${API_URL.replace('/api', '')}/uploads/${r.imagem_filename}` : '';
+            document.getElementById('modal-title').innerHTML = r.nome_prato;
+            let html = '';
+            if (imgUrl) html += `<img class="modal-img" src="${imgUrl}" alt="${r.nome_prato}">`;
+            html += `<div class="modal-details">`;
+            html += `<span class="modal-detail">📋 Ficha Nº ${r.numero_ficha}</span>`;
+            html += `<span class="modal-detail">👥 ${r.numero_porcoes} porções</span>`;
+            html += `<span class="modal-detail">🏫 ${r.escola || 'Geral'}</span>`;
+            if (r.tempo_preparacao) html += `<span class="modal-detail">⏱️ ${r.tempo_preparacao}</span>`;
+            if (r.forma_preparacao) html += `<span class="modal-detail">🔥 ${r.forma_preparacao}</span>`;
+            html += `</div>`;
+            html += `<div class="modal-section"><h3>📝 Ingredientes</h3><ul>`;
+            if (r.ingredientes && r.ingredientes.length > 0) { for (let i of r.ingredientes) { html += `<li><strong>${i.quantidade}</strong> ${i.produto}</li>`; } } else { html += `<li>Não especificado</li>`; }
+            html += `</ul></div><div class="modal-section"><h3>👨‍🍳 Modo de Preparação</h3><ol>`;
+            if (r.preparacao && r.preparacao.length > 0) { for (let p of r.preparacao) { html += `<li>${p.descricao}</li>`; } } else { html += `<li>Não especificado</li>`; }
+            html += `</ol></div>`;
+            if (r.material_necessario) { html += `<div class="modal-section"><h3>🔧 Material Necessário</h3><p>${r.material_necessario}</p></div>`; }
+            document.getElementById('modal-body').innerHTML = html;
+            document.getElementById('modal').style.display = 'flex';
+        }
+        
+        function fecharModal() { document.getElementById('modal').style.display = 'none'; }
+        
+        function baixarPDF(r) {
+            const imgUrl = r.imagem_filename ? `${API_URL.replace('/api', '')}/uploads/${r.imagem_filename}` : '';
+            const win = window.open('', '_blank');
+            win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + r.nome_prato + '</title><style>body{font-family:Arial;padding:40px;max-width:800px;margin:0 auto;}h1{color:#24449b;border-bottom:3px solid #45c974;padding-bottom:15px;}.details{display:flex;gap:15px;justify-content:center;margin:20px 0;flex-wrap:wrap;}.detail{background:#f4f5f8;padding:5px 15px;border-radius:20px;}h2{color:#24449b;border-left:3px solid #45c974;padding-left:10px;margin:20px 0 10px;}.footer{text-align:center;margin-top:30px;font-size:11px;color:#999;border-top:1px solid #eee;padding-top:15px;}</style></head><body>');
+            win.document.write('<h1>' + r.nome_prato + '</h1>');
+            if (imgUrl) win.document.write('<div style="text-align:center"><img src="' + imgUrl + '" style="max-width:100%;max-height:300px;border-radius:16px;"></div>');
+            win.document.write('<div class="details"><span class="detail">📋 Ficha Nº ' + r.numero_ficha + '</span><span class="detail">👥 ' + r.numero_porcoes + ' porções</span><span class="detail">🏫 ' + (r.escola || 'Geral') + '</span>' + (r.tempo_preparacao ? '<span class="detail">⏱️ ' + r.tempo_preparacao + '</span>' : '') + '</div>');
+            win.document.write('<h2>📝 Ingredientes</h2><ul>');
+            if (r.ingredientes && r.ingredientes.length > 0) { for (let i of r.ingredientes) { win.document.write('<li><strong>' + i.quantidade + '</strong> ' + i.produto + '</li>'); } } else { win.document.write('<li>Não especificado</li>'); }
+            win.document.write('</ul><h2>👨‍🍳 Modo de Preparação</h2><ol>');
+            if (r.preparacao && r.preparacao.length > 0) { for (let p of r.preparacao) { win.document.write('<li>' + p.descricao + '</li>'); } } else { win.document.write('<li>Não especificado</li>'); }
+            win.document.write('</ol>');
+            if (r.material_necessario) { win.document.write('<h2>🔧 Material Necessário</h2><p>' + r.material_necessario + '</p>'); }
+            win.document.write('<div class="footer">EuroACE 2025 - Dia da Europa | Pratos de Boa Memória | receitas com alma</div>');
+            win.document.write('<script>window.onload=function(){setTimeout(function(){window.print();setTimeout(function(){window.close();},1000);},500);}<\/script>');
+            win.document.write('</body></html>');
+            win.document.close();
+        }
+        
+        async function carregar() {
+            try {
+                const response = await fetch(API_URL + '/receitas/escola/' + encodeURIComponent(nomeEscola));
+                if (!response.ok) throw new Error('Erro na resposta');
+                const receitas = await response.json();
+                const container = document.getElementById('receitas');
+                if (receitas.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding:2rem;">📭 Nenhuma receita encontrada para esta escola.</div>';
+                    return;
+                }
+                let html = '';
+                for (const r of receitas) {
+                    const imgUrl = r.imagem_filename ? `${API_URL.replace('/api', '')}/uploads/${r.imagem_filename}` : '';
+                    html += '<div class="receita-card">';
+                    html += '<div class="receita-imagem" onclick=\'abrirModal(' + JSON.stringify(r).replace(/'/g, "\\'") + ')\'>';
+                    if (imgUrl) { html += '<img src="' + imgUrl + '" alt="' + r.nome_prato + '" onerror="this.parentElement.innerHTML=\'<div class=\\\'placeholder-icon\\\'>🍽️</div>\'">'; }
+                    else { html += '<div class="placeholder-icon">🍽️</div>'; }
+                    html += '<span class="ficha-num">#' + r.numero_ficha + '</span></div>';
+                    html += '<div class="receita-info">';
+                    html += '<h2>' + r.nome_prato + '</h2>';
+                    html += '<div class="receita-meta">';
+                    html += '<span class="meta-chip">👥 ' + r.numero_porcoes + ' porções</span>';
+                    html += '<span class="escola-chip">🏫 ' + (r.escola || 'Geral') + '</span>';
+                    if (r.tempo_preparacao) html += '<span class="meta-chip">⏱️ ' + r.tempo_preparacao + '</span>';
+                    html += '</div>';
+                    html += '<div class="btn-group">';
+                    html += '<button class="btn-ver" onclick=\'abrirModal(' + JSON.stringify(r).replace(/'/g, "\\'") + ')\'>👁️ Ver receita</button>';
+                    html += '<button class="btn-pdf" onclick=\'baixarPDF(' + JSON.stringify(r).replace(/'/g, "\\'") + ')\'>📄 Baixar PDF</button>';
+                    html += '</div></div></div>';
+                }
+                container.innerHTML = html;
+            } catch(error) {
+                console.error('Erro:', error);
+                document.getElementById('receitas').innerHTML = '<div style="text-align:center; padding:2rem;">❌ Erro ao carregar receitas.</div>';
+            }
+        }
+        
+        carregar();
+    </script>
+</body>
+</html>
