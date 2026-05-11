@@ -71,8 +71,13 @@
         .categoria-icon { font-size: 2rem; }
         .categoria-nome { font-size: 0.9rem; font-weight: bold; color: #24449b; margin: 0.4rem 0; }
         
-        .contact { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; }
+        .contact { display: flex; justify-content: space-between; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
         .contact-items { display: grid; gap: .6rem; color: #24449b; font-weight: 700; font-size: 0.9rem; }
+        .agradecimentos { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e0e0e0; }
+        .agradecimentos h3 { color: #24449b; margin-bottom: 1rem; font-size: 1.2rem; }
+        .agradecimentos p { margin-bottom: 0.8rem; line-height: 1.5; }
+        .agradecimentos ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .agradecimentos li { margin-bottom: 0.5rem; }
         
         .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
         .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
@@ -207,15 +212,27 @@
                 </div>
             </section>
 
-            <section id="contacto" class="contact section-card">
-                <div>
-                    <p class="eyebrow" data-pt="Contacto" data-es="Contacto">Contacto</p>
-                    <h2 data-pt="Fale connosco" data-es="Hable con nosotros">Fale connosco</h2>
-                    <p data-pt="Use esta secção para apresentar email, telefone, morada e formulário." data-es="Use esta sección para presentar email, teléfono, dirección y formulario.">Use esta secção para apresentar email, telefone, morada e formulário.</p>
-                </div>
-                <div class="contact-items">
-                    <span>📧 geral@euroace26.pt</span>
-                    <span>📍 Portugal / Espanha</span>
+            <section id="contacto" class="section-card">
+                <div style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+                    <div style="flex: 1;">
+                        <p class="eyebrow" data-pt="Contacto" data-es="Contacto">Contacto</p>
+                        <h2 data-pt="Fale connosco" data-es="Hable con nosotros">Fale connosco</h2>
+                        <p data-pt="Use esta secção para apresentar email, telefone, morada e formulário." data-es="Use esta sección para presentar email, teléfono, dirección y formulario.">Use esta secção para apresentar email, telefone, morada e formulário.</p>
+                        <div class="contact-items" style="margin-top: 1rem;">
+                            <span></span>
+                            <span>📍 Portugal / Espanha</span>
+                        </div>
+                    </div>
+                    <div style="flex: 1.5;">
+                        <div class="agradecimentos">
+                            <h3 data-pt="AGRADECIMENTOS" data-es="AGRADECIMIENTOS">AGRADECIMENTOS</h3>
+                            <p data-pt="Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento." data-es="En nombre de la EUROACE, agradecemos a los socios indispensables para la realización de este evento, al Ayuntamiento de Fundão con quien contamos desde el primer momento, en la complicidad y en el compromiso y se dispuso a acoger y apoyar el Evento.">Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento.</p>
+                            <p data-pt="À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa." data-es="A la Escola Profissional do Fundão con quien contamos desde el inicio en la preparación de los diferentes elementos que integran esta Celebración del Día de Europa.">À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa.</p>
+                            <p data-pt="Às Escolas Profissionais 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão e aos Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz e 'Universidade Laboral' de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais." data-es="A las Escuelas Profesionales 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão y a los Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz y 'Universidad Laboral' de Cáceres, con quienes contamos en la recogida del recetario tradicional de sus respectivos territorios y en la preparación de las sesiones de demostración y showcooking y muestra de productos locales.">Às Escolas Profissionais "da Raia", de Idanha-a-Nova, "Agostinho Roseta", de Castelo Branco, "Agrícola da Quinta da Lageosa", da Covilhã, "Regional do Alentejo", de Évora, "de Desenvolvimento Rural", de Alter do Chão e aos Institutos de Enseñanza Secundaria "San Fernando" de Badajoz e "Universidade Laboral" de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais.</p>
+                            <p data-pt="Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo." data-es="A los representantes y responsables de la educación de las tres regiones que acompañaron y apoyaron todo el proceso.">Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo.</p>
+                            <p data-pt="A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos." data-es="A todos los que trabajaron, contribuyeron, que participan y hacen posible un Día de Europa que celebra la cooperación transfronteriza y los valores europeos que compartimos.">A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -264,12 +281,10 @@
 
     <script>
         function mudarIdioma(idioma) {
-            // Atualizar botões
             document.getElementById('btn-pt').classList.remove('active');
             document.getElementById('btn-es').classList.remove('active');
             document.getElementById(`btn-${idioma}`).classList.add('active');
             
-            // Trocar imagem do horário
             const img = document.getElementById('horario-img');
             if (img) {
                 if (idioma === 'pt') {
@@ -281,7 +296,6 @@
                 }
             }
             
-            // Trocar textos
             const elementos = document.querySelectorAll('[data-pt]');
             elementos.forEach(el => {
                 if (idioma === 'pt') {
