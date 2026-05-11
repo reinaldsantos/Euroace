@@ -109,7 +109,6 @@
 </head>
 <body>
     <div class="site-shell">
-        <!-- Seletor de Idioma -->
         <div class="language-selector">
             <button id="btn-pt" class="active" onclick="mudarIdioma('pt')">🇵🇹 PT</button>
             <button id="btn-es" onclick="mudarIdioma('es')">🇪🇸 ES</button>
@@ -124,11 +123,11 @@
             <div class="dropdown">
                 <button class="dropbtn" data-pt="Ementa ▼" data-es="Menú ▼">Ementa ▼</button>
                 <div class="dropdown-content">
-                    <a href="entrada.html" data-pt="🍽️ Entradas" data-es="🍽️ Entrantes">🍽️ Entradas</a>
-                    <a href="carne.html" data-pt="🥩 Pratos de Carne" data-es="🥩 Platos de Carne">🥩 Pratos de Carne</a>
-                    <a href="peixe.html" data-pt="🐟 Pratos de Peixe" data-es="🐟 Platos de Pescado">🐟 Pratos de Peixe</a>
-                    <a href="sobremesa.html" data-pt="🍰 Sobremesas" data-es="🍰 Postres">🍰 Sobremesas</a>
-                    <a href="bebidas.html" data-pt="🥤 Bebidas" data-es="🥤 Bebidas">🥤 Bebidas</a>
+                    <a href="entrada.html">🍽️ Entradas</a>
+                    <a href="carne.html">🥩 Pratos de Carne</a>
+                    <a href="peixe.html">🐟 Pratos de Peixe</a>
+                    <a href="sobremesa.html">🍰 Sobremesas</a>
+                    <a href="bebidas.html">🥤 Bebidas</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -234,7 +233,7 @@
                         <input type="email" placeholder="seu e-mail" aria-label="Email">
                         <button type="submit" data-pt="Subscrever" data-es="Suscribirse">Subscrever</button>
                     </form>
-                    <a class="admin-link" href="admin/login.html" data-pt="⚙️ Área administrativa" data-es="⚙️ Área administrativa">⚙️ Área administrativa</a>
+                    <a class="admin-link" href="admin/login.html">⚙️ Área administrativa</a>
                 </div>
             </div>
             <div class="logo-strip">
@@ -245,26 +244,24 @@
 
     <script>
         function mudarIdioma(idioma) {
-            // Atualizar botões ativos
+            // Atualizar botões
             document.getElementById('btn-pt').classList.remove('active');
             document.getElementById('btn-es').classList.remove('active');
             document.getElementById(`btn-${idioma}`).classList.add('active');
             
-            // Mudar o lang do HTML
-            document.documentElement.lang = idioma === 'pt' ? 'pt-PT' : 'es-ES';
-            
-        n        // Trocar a imagem do horário
-        const imgHorario = document.getElementById("horario-img");
-        if (imgHorario) {
-            if (idioma === "pt") {
-                imgHorario.src = "assets/images/horariopt.png";
-                imgHorario.alt = "Programação EuroACE 2025";
-            } else {
-                imgHorario.src = "assets/images/horarioespanhol.png";
-                imgHorario.alt = "Programación EuroACE 2025";
+            // Trocar imagem do horário
+            const img = document.getElementById('horario-img');
+            if (img) {
+                if (idioma === 'pt') {
+                    img.src = 'assets/images/horariopt.png';
+                    img.alt = 'Programação EuroACE 2025';
+                } else {
+                    img.src = 'assets/images/horarioespanhol.png';
+                    img.alt = 'Programación EuroACE 2025';
+                }
             }
-        }
-            // Percorrer todos os elementos com data-pt e data-es
+            
+            // Trocar textos
             const elementos = document.querySelectorAll('[data-pt]');
             elementos.forEach(el => {
                 if (idioma === 'pt') {
@@ -274,9 +271,6 @@
                 }
             });
         }
-        
-        // Inicializar em português
-        mudarIdioma('pt');
     </script>
 </body>
 </html>
