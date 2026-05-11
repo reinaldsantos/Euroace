@@ -77,7 +77,7 @@
         
         .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
         .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
-        .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 4rem; max-width: 1400px; margin: 0 auto; }
+        .footer-content { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 2rem; padding: 3rem 4rem; max-width: 1400px; margin: 0 auto; }
         .footer h2, .footer h3 { color: #f1f1f1; font-weight: 300; }
         .footer h2 span { color: #45c974; }
         .footer ul { list-style: none; padding: 0; margin: 0; }
@@ -86,10 +86,10 @@
         .footer a:hover { color: white; }
         .socials { display: flex; gap: 1rem; margin-top: 1.5rem; }
         .socials a { width: 42px; height: 42px; display: grid; place-items: center; background: #45c974; color: white; border-radius: 50%; text-decoration: none; }
-        .newsletter { display: grid; gap: .8rem; margin: 1rem 0; }
-        .newsletter input { padding: 0.8rem; font-size: 1rem; border: 0; border-radius: 8px; }
-        .newsletter button { width: fit-content; border: 0; background: #45c974; color: white; font-weight: 800; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; }
-        .admin-link { margin-top: 1rem; color: white; font-weight: 700; display: inline-block; text-decoration: none; }
+        .contactos-footer p { margin-bottom: 1rem; line-height: 1.6; }
+        .contactos-footer a { color: #45c974; text-decoration: none; }
+        .contactos-footer a:hover { text-decoration: underline; }
+        
         .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
         .logo-strip img { max-height: 100px; object-fit: contain; }
         
@@ -237,23 +237,22 @@
                         <li><a href="#contacto" data-pt="Contacto" data-es="Contacto">Contacto</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 data-pt="Oferta Formativa" data-es="Oferta Formativa">Oferta Formativa</h3>
-                    <ul>
-                        <li><a href="#" data-pt="Cursos Profissionais" data-es="Cursos Profesionales">Cursos Profissionais</a></li>
-                        <li><a href="#" data-pt="Cursos CEF" data-es="Cursos CEF">Cursos CEF</a></li>
-                        <li><a href="#" data-pt="Outras Ofertas Formativas" data-es="Otras Ofertas Formativas">Outras Ofertas Formativas</a></li>
-                        <li><a href="#" data-pt="Alumni e Parceiros" data-es="Alumni y Socios">Alumni e Parceiros</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 data-pt="Newsletter" data-es="Newsletter">Newsletter</h3>
-                    <p data-pt="Inscreva-se para receber informações e novidades do projeto." data-es="Inscríbase para recibir informaciones y novedades del proyecto.">Inscreva-se para receber informações e novidades do projeto.</p>
-                    <form class="newsletter" onsubmit="return false;">
-                        <input type="email" placeholder="seu e-mail" aria-label="Email">
-                        <button type="submit" data-pt="Subscrever" data-es="Suscribirse">Subscrever</button>
-                    </form>
-                    <a class="admin-link" href="admin/login.html">⚙️ Área administrativa</a>
+                <div class="contactos-footer">
+                    <h3 data-pt="CONTACTOS" data-es="CONTACTOS">CONTACTOS</h3>
+                    <p><strong data-pt="Região Centro" data-es="Región Centro">Região Centro</strong><br>
+                    +351 239 400 100<br>
+                    git@ccdrc.pt<br>
+                    <a href="http://www.ccdrc.pt" target="_blank">http://www.ccdrc.pt</a></p>
+                    
+                    <p><strong data-pt="Alentejo" data-es="Alentejo">Alentejo</strong><br>
+                    +351 266 740 300<br>
+                    dci@ccdr-a.gov.pt<br>
+                    <a href="https://www.ccdr-a.gov.pt" target="_blank">https://www.ccdr-a.gov.pt</a></p>
+                    
+                    <p><strong data-pt="Extremadura" data-es="Extremadura">Extremadura</strong><br>
+                    +34 924 00 36 58<br>
+                    info@juntaex.es<br>
+                    <a href="http://gitextremadura.juntaex.es" target="_blank">http://gitextremadura.juntaex.es</a></p>
                 </div>
             </div>
             <div class="logo-strip">
