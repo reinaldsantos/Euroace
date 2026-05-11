@@ -253,6 +253,17 @@
             // Mudar o lang do HTML
             document.documentElement.lang = idioma === 'pt' ? 'pt-PT' : 'es-ES';
             
+        n        // Trocar a imagem do horário
+        const imgHorario = document.getElementById("horario-img");
+        if (imgHorario) {
+            if (idioma === "pt") {
+                imgHorario.src = "assets/images/horariopt.png";
+                imgHorario.alt = "Programação EuroACE 2025";
+            } else {
+                imgHorario.src = "assets/images/horarioespanhol.png";
+                imgHorario.alt = "Programación EuroACE 2025";
+            }
+        }
             // Percorrer todos os elementos com data-pt e data-es
             const elementos = document.querySelectorAll('[data-pt]');
             elementos.forEach(el => {
