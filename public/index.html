@@ -51,7 +51,6 @@
         .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
-        /* Remove hover effect - agora controlado por clique */
         .dropdown.open .dropdown-content { display: block; }
         
         main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
@@ -98,7 +97,6 @@
         
         .escolas-list { max-height: 300px; overflow-y: auto; }
         
-        /* Estilos para o texto do enquadramento */
         .enquadramento-texto p {
             margin-bottom: 1rem;
             line-height: 1.6;
@@ -155,7 +153,6 @@
         </nav>
 
         <main>
-            <!-- PRIMEIRO CARD - ENQUADRAMENTO com o conteúdo da Euroregião -->
             <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
                 <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
                 <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
@@ -277,14 +274,12 @@
     </div>
 
     <script>
-        // Função para fechar todos os dropdowns
         function fecharTodosDropdowns() {
             document.querySelectorAll('.dropdown').forEach(dropdown => {
                 dropdown.classList.remove('open');
             });
         }
         
-        // Função para abrir/fechar um dropdown específico
         function toggleDropdown(dropdown) {
             const isOpen = dropdown.classList.contains('open');
             fecharTodosDropdowns();
@@ -293,9 +288,7 @@
             }
         }
         
-        // Configurar dropdowns com clique
         document.addEventListener('DOMContentLoaded', function() {
-            // Dropdown de Ementa
             const dropdownMenta = document.getElementById('dropdown-menta');
             const btnMenta = document.getElementById('btn-menta');
             
@@ -306,7 +299,6 @@
                 });
             }
             
-            // Dropdown de Escolas
             const dropdownEscolas = document.getElementById('dropdown-escolas');
             const btnEscolas = document.getElementById('btn-escolas');
             
@@ -317,7 +309,6 @@
                 });
             }
             
-            // Fechar dropdowns ao clicar fora
             document.addEventListener('click', function(e) {
                 const isClickInsideMenta = dropdownMenta && dropdownMenta.contains(e.target);
                 const isClickInsideEscolas = dropdownEscolas && dropdownEscolas.contains(e.target);
@@ -336,7 +327,7 @@
             const img = document.getElementById('horario-img');
             if (img) {
                 if (idioma === 'pt') {
-                    img.src = 'assets/images/horariopt.png';
+                    img.src = 'assets/images/horario.png';
                     img.alt = 'Programação EuroACE 2025';
                 } else {
                     img.src = 'assets/images/horarioespanhol.png';
