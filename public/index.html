@@ -51,7 +51,8 @@
         .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
         .dropdown-content a:last-child { border-bottom: none; }
         .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
-        .dropdown:hover .dropdown-content { display: block; }
+        /* Remove hover effect - agora controlado por clique */
+        .dropdown.open .dropdown-content { display: block; }
         
         main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
         .section-card { background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08); border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem); box-shadow: 0 18px 50px rgba(0,0,0,.08); }
@@ -97,6 +98,12 @@
         
         .escolas-list { max-height: 300px; overflow-y: auto; }
         
+        /* Estilos para o texto do enquadramento */
+        .enquadramento-texto p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
         @media (max-width: 850px) {
             .grid-two, .categorias-grid, .footer-content { grid-template-columns: 1fr; }
             .contact { flex-direction: column; align-items: flex-start; }
@@ -121,9 +128,9 @@
         <nav class="nav">
             <a href="#enquadramento" data-pt="Enquadramento" data-es="Marco">Enquadramento</a>
             <a href="#euroace26" data-pt="Euroace '26" data-es="Euroace '26">Euroace '26</a>
-            <div class="dropdown">
-                <button class="dropbtn" data-pt="Ementa ▼" data-es="Menú ▼">Ementa ▼</button>
-                <div class="dropdown-content">
+            <div class="dropdown" id="dropdown-menta">
+                <button class="dropbtn" id="btn-menta" data-pt="Ementa ▼" data-es="Menú ▼">Ementa ▼</button>
+                <div class="dropdown-content" id="dropdown-content-menta">
                     <a href="entrada.html">🍽️ Entradas</a>
                     <a href="carne.html">🥩 Pratos de Carne</a>
                     <a href="peixe.html">🐟 Pratos de Peixe</a>
@@ -131,9 +138,9 @@
                     <a href="bebidas.html">🥤 Bebidas</a>
                 </div>
             </div>
-            <div class="dropdown">
-                <button class="dropbtn" data-pt="Escolas ▼" data-es="Escuelas ▼">Escolas ▼</button>
-                <div class="dropdown-content escolas-list">
+            <div class="dropdown" id="dropdown-escolas">
+                <button class="dropbtn" id="btn-escolas" data-pt="Escolas ▼" data-es="Escuelas ▼">Escolas ▼</button>
+                <div class="dropdown-content escolas-list" id="dropdown-content-escolas">
                     <a href="escola.html?nome=Agostinho Roseta">🏫 Agostinho Roseta</a>
                     <a href="escola.html?nome=Alter do Chão">🏫 Alter do Chão</a>
                     <a href="escola.html?nome=Raia Idanha-a-Nova">🏫 Raia Idanha-a-Nova</a>
@@ -148,10 +155,19 @@
         </nav>
 
         <main>
+            <!-- PRIMEIRO CARD - ENQUADRAMENTO com o conteúdo da Euroregião -->
             <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
-                <p class="eyebrow" data-pt="Euroace '26" data-es="Euroace '26">Euroace '26</p>
-                <h1 data-pt="Proposta da Página Principal" data-es="Propuesta de la Página Principal">Proposta da Página Principal</h1>
-                <p data-pt="Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto." data-es="Plataforma dedicada al Día de Europa, reuniendo contenidos sobre la región, menús, escuelas participantes y contactos del proyecto.">Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
+                <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
+                <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
+                
+                <div class="enquadramento-texto">
+                    <p data-pt="A Euroregião EUROACE é constituída pelas regiões do Alentejo e Centro de Portugal, por um lado, e a Comunidade Autónoma de Extremadura, de Espanha, por outro, tendo sido criada em 21 de Setembro de 2009, em Vila Velha de Ródão, através da assinatura do Protocolo da Comunidade de Trabalho Transfronteiriça EUROACE, que materializa a vontade das três regiões de reforçar e dar um novo impulso às suas relações de cooperação." data-es="La Eurorregión EUROACE está constituida por las regiones de Alentejo y Centro de Portugal, por un lado, y la Comunidad Autónoma de Extremadura, de España, por otro, habiendo sido creada el 21 de septiembre de 2009, en Vila Velha de Ródão, mediante la firma del Protocolo de la Comunidad de Trabajo Transfronteriza EUROACE, que materializa la voluntad de las tres regiones de reforzar y dar un nuevo impulso a sus relaciones de cooperación.">A Euroregião EUROACE é constituída pelas regiões do Alentejo e Centro de Portugal, por um lado, e a Comunidade Autónoma de Extremadura, de Espanha, por outro, tendo sido criada em 21 de Setembro de 2009, em Vila Velha de Ródão, através da assinatura do Protocolo da Comunidade de Trabalho Transfronteiriça EUROACE, que materializa a vontade das três regiões de reforçar e dar um novo impulso às suas relações de cooperação.</p>
+                    
+                    <p data-pt="Este Protocolo, subscrito pela Junta de Extremadura e as Comissões de Coordenação e Desenvolvimento Regional do Alentejo e do Centro, constitui a base legal para a criação de uma grande Euroregião, na qual são desenvolvidos, em conjunto, projetos relevantes para as entidades da esfera pública, para as empresas e para a sociedade em geral." data-es="Este Protocolo, suscrito por la Junta de Extremadura y las Comisiones de Coordinación y Desarrollo Regional de Alentejo y Centro, constituye la base legal para la creación de una gran Eurorregión, en la cual se desarrollan, conjuntamente, proyectos relevantes para las entidades de la esfera pública, para las empresas y para la sociedad en general.">Este Protocolo, subscrito pela Junta de Extremadura e as Comissões de Coordenação e Desenvolvimento Regional do Alentejo e do Centro, constitui a base legal para a criação de uma grande Euroregião, na qual são desenvolvidos, em conjunto, projetos relevantes para as entidades da esfera pública, para as empresas e para a sociedade em geral.</p>
+                    
+                    <p data-pt="A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar." data-es="La EUROACE es un organismo sin personalidad jurídica dotado de una estructura de trabajo ágil y totalmente abierta a todas las entidades y organismos, públicos y privados, de las tres regiones que estén interesados en participar y cooperar.">A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar.</p>
+                </div>
+                
                 <div class="actions">
                     <a class="btn primary" href="#ementa" data-pt="Ver ementa" data-es="Ver menú">Ver ementa</a>
                     <a class="btn secondary" href="#contacto" data-pt="Contactar" data-es="Contactar">Contactar</a>
@@ -165,6 +181,13 @@
             <section id="euroace26" class="section-card">
                 <p class="eyebrow" data-pt="EuroACE 2026" data-es="EuroACE 2026">EuroACE 2026</p>
                 <h2 data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</h2>
+                <p style="font-style: italic; margin-bottom: 1rem;" data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</p>
+                <p style="font-style: italic; margin-bottom: 1.5rem;" data-pt="En la Mesa de la EUROACE: compartiendo sabores con historia(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">En la Mesa de la EUROACE: compartiendo sabores con historia(s)</p>
+                
+                <p style="font-size: 2rem; color: #e7473e; margin-bottom: 1rem;">🎄 Natal</p>
+                <p style="margin-bottom: 1rem;" data-pt="Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)" data-es="Texto de ejemplo 1, Texto de ejemplo (Eugénia Brito, O Tamanho das Mãos, 2023)">Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)</p>
+                
+                <p style="margin-bottom: 1rem;">&nbsp;</p>
                 <p style="margin-bottom: 1rem;" data-pt="Desde 2017 que a EUROACE celebra em conjunto o Dia da Europa, com participação e envolvimento das Escolas do território, com temáticas e projetos desenvolvidos por estas, sempre com o compromisso de afirmar o projeto Europa como uma prioridade." data-es="Desde 2017 la EUROACE celebra conjuntamente el Día de Europa, con la participación y implicación de las Escuelas del territorio, con temáticas y proyectos desarrollados por ellas, siempre con el compromiso de afirmar el proyecto Europa como una prioridad.">Desde 2017 que a EUROACE celebra em conjunto o Dia da Europa, com participação e envolvimento das Escolas do território, com temáticas e projetos desenvolvidos por estas, sempre com o compromisso de afirmar o projeto Europa como uma prioridade.</p>
                 
                 <p style="margin-bottom: 1rem;" data-pt="Importa ter em conta que falamos a partir de um contexto transfronteiriço que envolve três regiões, Centro, Alentejo e Extremadura espanhola, e que afirma os valores europeus fundamentais: a dignidade humana, liberdade, democracia, igualdade, o Estado de direito e respeito pelos direitos humanos, a paz e uma sociedade assente na tolerância, justiça, solidariedade e não discriminação." data-es="Es importante tener en cuenta que hablamos desde un contexto transfronterizo que involucra tres regiones, Centro, Alentejo y Extremadura española, y que afirma los valores europeos fundamentales: la dignidad humana, libertad, democracia, igualdad, el Estado de derecho y respeto por los derechos humanos, la paz y una sociedad basada en la tolerancia, justicia, solidaridad y no discriminación.">Importa ter em conta que falamos a partir de um contexto transfronteiriço que envolve três regiões, Centro, Alentejo e Extremadura espanhola, e que afirma os valores europeus fundamentais: a dignidade humana, liberdade, democracia, igualdade, o Estado de direito e respeito pelos direitos humanos, a paz e uma sociedade assente na tolerância, justiça, solidariedade e não discriminação.</p>
@@ -261,6 +284,57 @@
     </div>
 
     <script>
+        // Função para fechar todos os dropdowns
+        function fecharTodosDropdowns() {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('open');
+            });
+        }
+        
+        // Função para abrir/fechar um dropdown específico
+        function toggleDropdown(dropdown) {
+            const isOpen = dropdown.classList.contains('open');
+            fecharTodosDropdowns();
+            if (!isOpen) {
+                dropdown.classList.add('open');
+            }
+        }
+        
+        // Configurar dropdowns com clique
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown de Ementa
+            const dropdownMenta = document.getElementById('dropdown-menta');
+            const btnMenta = document.getElementById('btn-menta');
+            
+            if (btnMenta && dropdownMenta) {
+                btnMenta.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleDropdown(dropdownMenta);
+                });
+            }
+            
+            // Dropdown de Escolas
+            const dropdownEscolas = document.getElementById('dropdown-escolas');
+            const btnEscolas = document.getElementById('btn-escolas');
+            
+            if (btnEscolas && dropdownEscolas) {
+                btnEscolas.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleDropdown(dropdownEscolas);
+                });
+            }
+            
+            // Fechar dropdowns ao clicar fora
+            document.addEventListener('click', function(e) {
+                const isClickInsideMenta = dropdownMenta && dropdownMenta.contains(e.target);
+                const isClickInsideEscolas = dropdownEscolas && dropdownEscolas.contains(e.target);
+                
+                if (!isClickInsideMenta && !isClickInsideEscolas) {
+                    fecharTodosDropdowns();
+                }
+            });
+        });
+        
         function mudarIdioma(idioma) {
             document.getElementById('btn-pt').classList.remove('active');
             document.getElementById('btn-es').classList.remove('active');
