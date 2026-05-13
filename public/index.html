@@ -138,8 +138,26 @@
         .admin-link-footer { color: #45c974; text-decoration: none; display: inline-block; margin-top: 0.5rem; }
         .admin-link-footer:hover { text-decoration: underline; }
         
-        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
+        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; position: relative; }
         .logo-strip img { max-height: 100px; object-fit: contain; }
+        
+        /* Link oculto no canto inferior direito */
+        .hidden-link {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            z-index: 999;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .hidden-link:hover {
+            opacity: 0.1;
+            background: #45c974;
+            border-radius: 50%;
+        }
         
         .escolas-list { max-height: 300px; overflow-y: auto; }
         
@@ -199,7 +217,7 @@
         </nav>
 
         <main>
-            <!-- PRIMEIRO CARD - ENQUADRAMENTO (apenas texto e imagem) -->
+            <!-- PRIMEIRO CARD - ENQUADRAMENTO -->
             <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
                 <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
                 <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
@@ -214,7 +232,7 @@
                 
                 <!-- IMAGEM COM CAMINHO CORRETO -->
                 <div style="margin: 2rem auto 0 auto; text-align: center;">
-                    <img id="horario-img" src="/assets/images/horarioespanhol1.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img id="horario-img" src="/assets/images/horario1.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                 </div>
             </section>
 
@@ -253,7 +271,7 @@
                     <p class="frase-final" data-pt="Pratos de Boa Memória | Receitas com alma" data-es="Platos de Buenos Recuerdos | Recetas con alma">Pratos de Boa Memória | Receitas com alma</p>
                 </div>
                 
-                <!-- ASSINATURA CCDR CENTRO, EUROACE (EMBAIXO DE "Pratos de Boa Memória | Receitas com alma") -->
+                <!-- ASSINATURA CCDR CENTRO, EUROACE -->
                 <div class="ccdr-assinatura-segundo-card">
                     <div class="nome" data-pt="CCDR Centro, EUROACE" data-es="CCDR Centro, EUROACE">CCDR Centro, EUROACE</div>
                 </div>
@@ -322,6 +340,7 @@
                 </div>
             </div>
             <div class="logo-strip">
+                <a href="https://www.epfundao.edu.pt/" target="_blank" class="hidden-link" aria-label="Link para a Escola Profissional do Fundão"></a>
                 <img src="assets/images/footer.png" alt="Logótipos dos parceiros e entidades financiadoras">
             </div>
         </footer>
@@ -381,10 +400,10 @@
             const img = document.getElementById('horario-img');
             if (img) {
                 if (idioma === 'pt') {
-                    img.src = '/assets/images/horarioespanhol1.png';
+                    img.src = '/assets/images/horario1.png';
                     img.alt = 'Programação EuroACE 2025';
                 } else {
-                    img.src = '/assets/images/horario1.png';
+                    img.src = '/assets/images/horarioespanhol1.png';
                     img.alt = 'Programación EuroACE 2025';
                 }
             }
