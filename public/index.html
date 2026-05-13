@@ -60,6 +60,38 @@
         h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: .98; margin-bottom: 1rem; }
         h2 { font-size: clamp(1.3rem, 3vw, 2rem); line-height: 1.05; margin-bottom: 0.8rem; color: #24449b; }
         
+        /* Estilo para o título no canto inferior direito */
+        .titulo-direita {
+            text-align: right;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e9ecef;
+        }
+        .titulo-direita h2 {
+            margin-bottom: 0;
+            color: #24449b;
+        }
+        .titulo-direita p {
+            font-style: italic;
+            color: #666;
+        }
+        
+        .agradecimentos {
+            padding: 1rem 0;
+            margin-top: 2rem;
+            border-top: 2px solid #e9ecef;
+        }
+        .agradecimentos h3 { 
+            color: #24449b; 
+            margin-bottom: 1rem; 
+            font-size: 1.2rem; 
+        }
+        .agradecimentos p { 
+            margin-bottom: 0.8rem; 
+            line-height: 1.5; 
+        }
+        
         .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
         
         .categorias-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
@@ -67,10 +99,6 @@
         .categoria-card:hover { transform: translateY(-4px); border-color: #45c974; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
         .categoria-icon { font-size: 2rem; }
         .categoria-nome { font-size: 0.9rem; font-weight: bold; color: #24449b; margin: 0.4rem 0; }
-        
-        .agradecimentos { padding: 1rem 0; }
-        .agradecimentos h3 { color: #24449b; margin-bottom: 1rem; font-size: 1.2rem; }
-        .agradecimentos p { margin-bottom: 0.8rem; line-height: 1.5; }
         
         .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
         .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
@@ -150,6 +178,7 @@
         </nav>
 
         <main>
+            <!-- PRIMEIRO CARD - ENQUADRAMENTO (apenas imagem com caminho correto) -->
             <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
                 <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
                 <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
@@ -162,17 +191,15 @@
                     <p data-pt="A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar." data-es="La EUROACE es un organismo sin personalidad jurídica dotado de una estructura de trabajo ágil y totalmente abierta a todas las entidades y organismos, públicos y privados, de las tres regiones que estén interesados en participar y cooperar.">A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar.</p>
                 </div>
                 
+                <!-- IMAGEM COM CAMINHO CORRETO -->
                 <div style="margin: 2rem auto 0 auto; text-align: center;">
-                    <img id="horario-img" src="assets/images/horario.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img id="horario-img" src="/assets/images/horario1.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                 </div>
             </section>
 
+            <!-- SEGUNDO CARD - EUROACE 2026 (com título no canto inferior direito e agradecimentos) -->
             <section id="euroace26" class="section-card">
-                <p class="eyebrow" data-pt="EuroACE 2026" data-es="EuroACE 2026">EuroACE 2026</p>
-                <h2 data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</h2>
-                <p style="font-style: italic; margin-bottom: 1rem;" data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</p>
-                <p style="font-style: italic; margin-bottom: 1.5rem;" data-pt="En la Mesa de la EUROACE: compartiendo sabores con historia(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">En la Mesa de la EUROACE: compartiendo sabores con historia(s)</p>
-                
+                <!-- Todo o conteúdo existente -->
                 <p style="font-size: 2rem; color: #e7473e; margin-bottom: 1rem;">🎄 Natal</p>
                 <p style="margin-bottom: 1rem;" data-pt="Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)" data-es="Texto de ejemplo 1, Texto de ejemplo (Eugénia Brito, O Tamanho das Mãos, 2023)">Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)</p>
                 
@@ -199,8 +226,22 @@
                 
                 <p style="margin-bottom: 1rem;" data-pt="Foi partindo destes pressupostos que desafiámos oito Escolas Profissionais e Institutos de Enseñanza Secundaria das três regiões EUROACE, com formação nas áreas ligadas à gastronomia ou agrícolas, a recolherem Receitas Tradicionais associadas às Festas de Calendário, como Natal, Páscoa, colheitas, religiosas e outras, ou Celebrações sociais como o casamento, ou, simplesmente, receitas que fazem parte dos ritmos de vida próprios de cada território, da memória e que trazem consigo significado e sentimento de pertença. Na convicção de que cada receita conta uma história, do lugar de onde vem, das pessoas que a criaram, das circunstâncias que a moldaram." data-es="Fue partiendo de estos presupuestos que desafiamos a ocho Escuelas Profesionales e Institutos de Enseñanza Secundaria de las tres regiones EUROACE, con formación en las áreas ligadas a la gastronomía o agrícolas, a recoger Recetas Tradicionales asociadas a las Fiestas de Calendario, como Navidad, Pascua, cosechas, religiosas y otras, o Celebraciones sociales como la boda, o, simplemente, recetas que forman parte de los ritmos de vida propios de cada territorio, de la memoria y que traen consigo significado y sentimiento de pertenencia. En la convicción de que cada receta cuenta una historia, del lugar de donde viene, de las personas que la crearon, de las circunstancias que la moldearon.">Foi partindo destes pressupostos que desafiámos oito Escolas Profissionais e Institutos de Enseñanza Secundaria das três regiões EUROACE, com formação nas áreas ligadas à gastronomia ou agrícolas, a recolherem Receitas Tradicionais associadas às Festas de Calendário, como Natal, Páscoa, colheitas, religiosas e outras, ou Celebrações sociais como o casamento, ou, simplesmente, receitas que fazem parte dos ritmos de vida próprios de cada território, da memória e que trazem consigo significado e sentimento de pertença. Na convicção de que cada receita conta uma história, do lugar de onde vem, das pessoas que a criaram, das circunstâncias que a moldaram.</p>
                 
-                <p style="margin-top: 1rem; font-weight: bold; text-align: center;" data-pt="Pratos de Boa Memória | Receitas com alma" data-es="Platos de Buenos Recuerdos | Recetas con alma">Pratos de Boa Memória | Receitas com alma</p>
-                <p style="font-style: italic; text-align: center;" data-pt="Platos de Buenos Recuerdos | Recetas con alma" data-es="Platos de Buenos Recuerdos | Recetas con alma">Platos de Buenos Recuerdos | Recetas con alma</p>
+                <!-- TÍTULO NO CANTO INFERIOR DIREITO -->
+                <div class="titulo-direita">
+                    <h2 data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</h2>
+                    <p data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</p>
+                    <p data-pt="Pratos de Boa Memória | Receitas com alma" data-es="Platos de Buenos Recuerdos | Recetas con alma" style="font-weight: bold;">Pratos de Boa Memória | Receitas com alma</p>
+                </div>
+                
+                <!-- AGRADECIMENTOS DENTRO DO SEGUNDO CARD -->
+                <div class="agradecimentos">
+                    <h3 data-pt="AGRADECIMENTOS" data-es="AGRADECIMIENTOS">AGRADECIMENTOS</h3>
+                    <p data-pt="Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento." data-es="En nombre de la EUROACE, agradecemos a los socios indispensables para la realización de este evento, al Ayuntamiento de Fundão con quien contamos desde el primer momento, en la complicidad y en el compromiso y se dispuso a acoger y apoyar el Evento.">Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento.</p>
+                    <p data-pt="À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa." data-es="A la Escola Profissional do Fundão con quien contamos desde el inicio en la preparación de los diferentes elementos que integran esta Celebración del Día de Europa.">À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa.</p>
+                    <p data-pt="Às Escolas Profissionais 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão e aos Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz e 'Universidade Laboral' de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais." data-es="A las Escuelas Profesionales 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão y a los Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz y 'Universidad Laboral' de Cáceres, con quienes contamos en la recogida del recetario tradicional de sus respectivos territorios y en la preparación de las sesiones de demostración y showcooking y muestra de productos locales.">Às Escolas Profissionais "da Raia", de Idanha-a-Nova, "Agostinho Roseta", de Castelo Branco, "Agrícola da Quinta da Lageosa", da Covilhã, "Regional do Alentejo", de Évora, "de Desenvolvimento Rural", de Alter do Chão e aos Institutos de Enseñanza Secundaria "San Fernando" de Badajoz e "Universidade Laboral" de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais.</p>
+                    <p data-pt="Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo." data-es="A los representantes y responsables de la educación de las tres regiones que acompañaron y apoyaron todo el proceso.">Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo.</p>
+                    <p data-pt="A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos." data-es="A todos los que trabajaron, contribuyeron, que participan y hacen posible un Día de Europa que celebra la cooperación transfronteriza y los valores europeos que compartimos.">A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos.</p>
+                </div>
             </section>
 
             <section id="ementa" class="section-card">
@@ -216,13 +257,22 @@
             </section>
 
             <section id="contacto" class="section-card">
-                <div class="agradecimentos">
-                    <h3 data-pt="AGRADECIMENTOS" data-es="AGRADECIMIENTOS">AGRADECIMENTOS</h3>
-                    <p data-pt="Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento." data-es="En nombre de la EUROACE, agradecemos a los socios indispensables para la realización de este evento, al Ayuntamiento de Fundão con quien contamos desde el primer momento, en la complicidad y en el compromiso y se dispuso a acoger y apoyar el Evento.">Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento.</p>
-                    <p data-pt="À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa." data-es="A la Escola Profissional do Fundão con quien contamos desde el inicio en la preparación de los diferentes elementos que integran esta Celebración del Día de Europa.">À Escola Profissional do Fundão com quem contamos desde o início na preparação dos diferentes elementos que integram esta Celebração do Dia da Europa.</p>
-                    <p data-pt="Às Escolas Profissionais 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão e aos Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz e 'Universidade Laboral' de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais." data-es="A las Escuelas Profesionales 'da Raia', de Idanha-a-Nova, 'Agostinho Roseta', de Castelo Branco, 'Agrícola da Quinta da Lageosa', da Covilhã, 'Regional do Alentejo', de Évora, 'de Desenvolvimento Rural', de Alter do Chão y a los Institutos de Enseñanza Secundaria 'San Fernando' de Badajoz y 'Universidad Laboral' de Cáceres, con quienes contamos en la recogida del recetario tradicional de sus respectivos territorios y en la preparación de las sesiones de demostración y showcooking y muestra de productos locales.">Às Escolas Profissionais "da Raia", de Idanha-a-Nova, "Agostinho Roseta", de Castelo Branco, "Agrícola da Quinta da Lageosa", da Covilhã, "Regional do Alentejo", de Évora, "de Desenvolvimento Rural", de Alter do Chão e aos Institutos de Enseñanza Secundaria "San Fernando" de Badajoz e "Universidade Laboral" de Cáceres, com quem contamos na recolha do receituário tradicional dos respetivos territórios e na preparação das sessões de demonstração e showcooking e mostra de produtos locais.</p>
-                    <p data-pt="Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo." data-es="A los representantes y responsables de la educación de las tres regiones que acompañaron y apoyaron todo el proceso.">Aos representantes e responsáveis da educação das três regiões que acompanharam e apoiaram todo o processo.</p>
-                    <p data-pt="A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos." data-es="A todos los que trabajaron, contribuyeron, que participan y hacen posible un Día de Europa que celebra la cooperación transfronteriza y los valores europeos que compartimos.">A todos os que trabalharam, contribuíram, que participam e tornam possível um Dia da Europa que celebra a cooperação transfronteiriça e os valores europeus que partilhamos.</p>
+                <div class="contactos-info">
+                    <h3 data-pt="CONTACTOS" data-es="CONTACTOS">CONTACTOS</h3>
+                    <p><strong data-pt="Região Centro" data-es="Región Centro">Região Centro</strong><br>
+                    +351 239 400 100<br>
+                    git@ccdrc.pt<br>
+                    <a href="http://www.ccdrc.pt" target="_blank">http://www.ccdrc.pt</a></p>
+                    
+                    <p><strong data-pt="Alentejo" data-es="Alentejo">Alentejo</strong><br>
+                    +351 266 740 300<br>
+                    dci@ccdr-a.gov.pt<br>
+                    <a href="https://www.ccdr-a.gov.pt" target="_blank">https://www.ccdr-a.gov.pt</a></p>
+                    
+                    <p><strong data-pt="Extremadura" data-es="Extremadura">Extremadura</strong><br>
+                    +34 924 00 36 58<br>
+                    info@juntaex.es<br>
+                    <a href="http://gitextremadura.juntaex.es" target="_blank">http://gitextremadura.juntaex.es</a></p>
                 </div>
             </section>
         </main>
@@ -326,10 +376,10 @@
             const img = document.getElementById('horario-img');
             if (img) {
                 if (idioma === 'pt') {
-                    img.src = 'assets/images/horario.png';
+                    img.src = '/assets/images/horario1.png';
                     img.alt = 'Programação EuroACE 2025';
                 } else {
-                    img.src = 'assets/images/horarioespanhol.png';
+                    img.src = '/assets/images/horarioespanhol1.png';
                     img.alt = 'Programación EuroACE 2025';
                 }
             }
