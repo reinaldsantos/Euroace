@@ -139,11 +139,11 @@
         .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; position: relative; }
         .logo-strip img { max-height: 100px; object-fit: contain; }
         
-        /* Link oculto - 3 dedos mais para a esquerda (≈100px) */
+        /* Link oculto - mais 2 dedos para esquerda (total 5 dedos ≈ 160px) */
         .hidden-link {
             position: fixed;
             bottom: 35px;   /* Um dedo para cima */
-            right: 130px;   /* 4 dedos no total (1 original + 3 extras = 4 dedos ≈130px) */
+            right: 195px;   /* 5 dedos no total (160px + 35px extra = 195px) */
             width: 50px;
             height: 50px;
             z-index: 999;
@@ -175,7 +175,7 @@
             .language-selector button { font-size: 10px; padding: 3px 6px; }
             .hidden-link {
                 bottom: 25px;
-                right: 90px;  /* 3 dedos mais esquerda no mobile */
+                right: 135px;  /* Mobile: mais 2 dedos esquerda */
                 width: 40px;
                 height: 40px;
             }
