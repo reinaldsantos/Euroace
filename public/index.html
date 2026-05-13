@@ -83,6 +83,21 @@
             margin-top: 0.5rem;
         }
         
+        /* Estilo para a assinatura CCDR */
+        .ccdr-assinatura-segundo-card {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #24449b;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0 1.5rem 0;
+            border-radius: 12px;
+            text-align: right;
+        }
+        .ccdr-assinatura-segundo-card .nome {
+            font-weight: bold;
+            color: #1a2b5e;
+            font-size: 1rem;
+        }
+        
         .agradecimentos {
             padding: 1rem 0;
             margin-top: 2rem;
@@ -96,41 +111,6 @@
         .agradecimentos p { 
             margin-bottom: 0.8rem; 
             line-height: 1.5; 
-        }
-        
-        .ccdr-assinatura {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
-            border-left: 4px solid #24449b;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-        }
-        .ccdr-assinatura p {
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-        .ccdr-assinatura .titulo-evento {
-            font-weight: bold;
-            color: #24449b;
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-        }
-        .ccdr-assinatura .subtitulo {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 0.5rem;
-        }
-        .ccdr-assinatura .frase {
-            font-weight: bold;
-            color: #24449b;
-            margin-top: 0.5rem;
-        }
-        .ccdr-assinatura .nome {
-            font-weight: bold;
-            color: #1a2b5e;
-            margin-top: 0.8rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #c5d5ea;
         }
         
         .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
@@ -219,7 +199,7 @@
         </nav>
 
         <main>
-            <!-- PRIMEIRO CARD - ENQUADRAMENTO -->
+            <!-- PRIMEIRO CARD - ENQUADRAMENTO (apenas texto e imagem) -->
             <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
                 <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
                 <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
@@ -232,21 +212,13 @@
                     <p data-pt="A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar." data-es="La EUROACE es un organismo sin personalidad jurídica dotado de una estructura de trabajo ágil y totalmente abierta a todas las entidades y organismos, públicos y privados, de las tres regiones que estén interesados en participar y cooperar.">A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar.</p>
                 </div>
                 
-                <!-- ASSINATURA CCDR CENTRO, EUROACE -->
-                <div class="ccdr-assinatura">
-                    <div class="titulo-evento" data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</div>
-                    <div class="subtitulo" data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</div>
-                    <div class="frase" data-pt="Pratos de Boa Memória | Receitas com alma" data-es="Platos de Buenos Recuerdos | Recetas con alma">Pratos de Boa Memória | Receitas com alma</div>
-                    <div class="nome" data-pt="CCDR Centro, EUROACE" data-es="CCDR Centro, EUROACE">CCDR Centro, EUROACE</div>
-                </div>
-                
                 <!-- IMAGEM COM CAMINHO CORRETO -->
                 <div style="margin: 2rem auto 0 auto; text-align: center;">
                     <img id="horario-img" src="/assets/images/horario1.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                 </div>
             </section>
 
-            <!-- SEGUNDO CARD - EUROACE 2026 (com título no canto inferior direito e agradecimentos) -->
+            <!-- SEGUNDO CARD - EUROACE 2026 -->
             <section id="euroace26" class="section-card">
                 <p style="font-size: 2rem; color: #e7473e; margin-bottom: 1rem;">🎄 Natal</p>
                 <p style="margin-bottom: 1rem;" data-pt="Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)" data-es="Texto de ejemplo 1, Texto de ejemplo (Eugénia Brito, O Tamanho das Mãos, 2023)">Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)</p>
@@ -279,6 +251,11 @@
                     <h2 data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</h2>
                     <p data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</p>
                     <p class="frase-final" data-pt="Pratos de Boa Memória | Receitas com alma" data-es="Platos de Buenos Recuerdos | Recetas con alma">Pratos de Boa Memória | Receitas com alma</p>
+                </div>
+                
+                <!-- ASSINATURA CCDR CENTRO, EUROACE (EMBAIXO DE "Pratos de Boa Memória | Receitas com alma") -->
+                <div class="ccdr-assinatura-segundo-card">
+                    <div class="nome" data-pt="CCDR Centro, EUROACE" data-es="CCDR Centro, EUROACE">CCDR Centro, EUROACE</div>
                 </div>
                 
                 <!-- AGRADECIMENTOS DENTRO DO SEGUNDO CARD -->
