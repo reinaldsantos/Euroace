@@ -99,15 +99,24 @@
             line-height: 1.6;
         }
         
-        .ccdr-texto {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #24449b;
-            margin: 0.5rem 0 1.5rem 0;
-            padding: 0.8rem;
-            background: #f0f7ff;
+        .ccdr-assinatura {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #24449b;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
             border-radius: 12px;
-            text-align: center;
+            font-weight: 500;
+            color: #1a2b5e;
+        }
+        
+        .ccdr-assinatura p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .ccdr-assinatura .nome {
+            font-weight: bold;
+            color: #24449b;
+            margin-top: 0.5rem;
         }
         
         @media (max-width: 850px) {
@@ -165,10 +174,6 @@
                 <p class="eyebrow" data-pt="EuroACE" data-es="EuroACE">EuroACE</p>
                 <h1 data-pt="Uma Euroregião sem Fronteiras" data-es="Una Eurorregión sin Fronteras">Uma Euroregião sem Fronteiras</h1>
                 
-                <div class="ccdr-texto">
-                    <span data-pt="🏛️ CCDR Centro, EUROACE" data-es="🏛️ CCDR Centro, EUROACE">🏛️ CCDR Centro, EUROACE</span>
-                </div>
-                
                 <div class="enquadramento-texto">
                     <p data-pt="A Euroregião EUROACE é constituída pelas regiões do Alentejo e Centro de Portugal, por um lado, e a Comunidade Autónoma de Extremadura, de Espanha, por outro, tendo sido criada em 21 de Setembro de 2009, em Vila Velha de Ródão, através da assinatura do Protocolo da Comunidade de Trabalho Transfronteiriça EUROACE, que materializa a vontade das três regiões de reforçar e dar um novo impulso às suas relações de cooperação." data-es="La Eurorregión EUROACE está constituida por las regiones de Alentejo y Centro de Portugal, por un lado, y la Comunidad Autónoma de Extremadura, de España, por otro, habiendo sido creada el 21 de septiembre de 2009, en Vila Velha de Ródão, mediante la firma del Protocolo de la Comunidad de Trabajo Transfronteriza EUROACE, que materializa la voluntad de las tres regiones de reforzar y dar un nuevo impulso a sus relaciones de cooperación.">A Euroregião EUROACE é constituída pelas regiões do Alentejo e Centro de Portugal, por um lado, e a Comunidade Autónoma de Extremadura, de Espanha, por outro, tendo sido criada em 21 de Setembro de 2009, em Vila Velha de Ródão, através da assinatura do Protocolo da Comunidade de Trabalho Transfronteiriça EUROACE, que materializa a vontade das três regiões de reforçar e dar um novo impulso às suas relações de cooperação.</p>
                     
@@ -177,11 +182,19 @@
                     <p data-pt="A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar." data-es="La EUROACE es un organismo sin personalidad jurídica dotado de una estructura de trabajo ágil y totalmente abierta a todas las entidades y organismos, públicos y privados, de las tres regiones que estén interesados en participar y cooperar.">A EUROACE é um organismo sem personalidade jurídica dotada de uma estrutura de trabalho ágil e totalmente aberta a todas as entidades e organismos, públicos e privados, das três regiões que estejam interessados em participar e a cooperar.</p>
                 </div>
                 
-                <div style="margin: 2rem auto 0 auto; text-align: center;">
+                <!-- CCDR Centro, EUROACE - LOGO APÓS O TEXTO -->
+                <div class="ccdr-assinatura">
+                    <p><strong>🏛️ CCDR Centro, EUROACE</strong></p>
+                    <p data-pt="A Comissão de Coordenação e Desenvolvimento Regional do Centro (CCDRC) é a entidade responsável pela gestão dos fundos europeus na região Centro de Portugal, promovendo o desenvolvimento regional sustentável e a cooperação transfronteiriça no âmbito da Euroregião EUROACE." data-es="La Comisión de Coordinación y Desarrollo Regional del Centro (CCDRC) es la entidad responsable de la gestión de los fondos europeos en la región Centro de Portugal, promoviendo el desarrollo regional sostenible y la cooperación transfronteriza en el ámbito de la Eurorregión EUROACE.">A Comissão de Coordenação e Desenvolvimento Regional do Centro (CCDRC) é a entidade responsável pela gestão dos fundos europeus na região Centro de Portugal, promovendo o desenvolvimento regional sustentável e a cooperação transfronteiriça no âmbito da Euroregião EUROACE.</p>
+                    <div class="nome" data-pt="Comissão de Coordenação e Desenvolvimento Regional do Centro" data-es="Comisión de Coordinación y Desarrollo Regional del Centro">Comissão de Coordenação e Desenvolvimento Regional do Centro</div>
+                </div>
+                
+                <!-- IMAGEM DO HORÁRIO -->
+                <div style="margin: 1.5rem auto 0 auto; text-align: center;">
                     <img id="horario-img" src="assets/images/horario1.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                 </div>
                 
-                <!-- Agradecimentos movidos para o final do primeiro card -->
+                <!-- AGRADECIMENTOS NO FINAL DO PRIMEIRO CARD -->
                 <div class="agradecimentos">
                     <h3 data-pt="AGRADECIMENTOS" data-es="AGRADECIMIENTOS">AGRADECIMENTOS</h3>
                     <p data-pt="Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento." data-es="En nombre de la EUROACE, agradecemos a los socios indispensables para la realización de este evento, al Ayuntamiento de Fundão con quien contamos desde el primer momento, en la complicidad y en el compromiso y se dispuso a acoger y apoyar el Evento.">Em nome da EUROACE, agradecemos aos parceiros indispensáveis à concretização deste evento, à Câmara Municipal do Fundão com quem contamos desde o primeiro momento, na cumplicidade e no compromisso e se disponibilizou para acolher e apoiar o Evento.</p>
@@ -195,6 +208,13 @@
             <section id="euroace26" class="section-card">
                 <p class="eyebrow" data-pt="EuroACE 2026" data-es="EuroACE 2026">EuroACE 2026</p>
                 <h2 data-pt="Dia da Europa na EUROACE 2026" data-es="Día de Europa en la EUROACE 2026">Dia da Europa na EUROACE 2026</h2>
+                <p style="font-style: italic; margin-bottom: 1rem;" data-pt="À volta da Mesa na EUROACE: partilha de sabores com história(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">À volta da Mesa na EUROACE: partilha de sabores com história(s)</p>
+                <p style="font-style: italic; margin-bottom: 1.5rem;" data-pt="En la Mesa de la EUROACE: compartiendo sabores con historia(s)" data-es="En la Mesa de la EUROACE: compartiendo sabores con historia(s)">En la Mesa de la EUROACE: compartiendo sabores con historia(s)</p>
+                
+                <p style="font-size: 2rem; color: #e7473e; margin-bottom: 1rem;">🎄 Natal</p>
+                <p style="margin-bottom: 1rem;" data-pt="Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)" data-es="Texto de ejemplo 1, Texto de ejemplo (Eugénia Brito, O Tamanho das Mãos, 2023)">Caixa de texto 1, Caixa de Texto (Eugénia Brito, O Tamanho das Mãos, 2023)</p>
+                
+                <p style="margin-bottom: 1rem;">&nbsp;</p>
                 <p style="margin-bottom: 1rem;" data-pt="Desde 2017 que a EUROACE celebra em conjunto o Dia da Europa, com participação e envolvimento das Escolas do território, com temáticas e projetos desenvolvidos por estas, sempre com o compromisso de afirmar o projeto Europa como uma prioridade." data-es="Desde 2017 la EUROACE celebra conjuntamente el Día de Europa, con la participación y implicación de las Escuelas del territorio, con temáticas y proyectos desarrollados por ellas, siempre con el compromiso de afirmar el proyecto Europa como una prioridad.">Desde 2017 que a EUROACE celebra em conjunto o Dia da Europa, com participação e envolvimento das Escolas do território, com temáticas e projetos desenvolvidos por estas, sempre com o compromisso de afirmar o projeto Europa como uma prioridade.</p>
                 
                 <p style="margin-bottom: 1rem;" data-pt="Importa ter em conta que falamos a partir de um contexto transfronteiriço que envolve três regiões, Centro, Alentejo e Extremadura espanhola, e que afirma os valores europeus fundamentais: a dignidade humana, liberdade, democracia, igualdade, o Estado de direito e respeito pelos direitos humanos, a paz e uma sociedade assente na tolerância, justiça, solidariedade e não discriminação." data-es="Es importante tener en cuenta que hablamos desde un contexto transfronterizo que involucra tres regiones, Centro, Alentejo y Extremadura española, y que afirma los valores europeos fundamentales: la dignidad humana, libertad, democracia, igualdad, el Estado de derecho y respeto por los derechos humanos, la paz y una sociedad basada en la tolerancia, justicia, solidaridad y no discriminación.">Importa ter em conta que falamos a partir de um contexto transfronteiriço que envolve três regiões, Centro, Alentejo e Extremadura espanhola, e que afirma os valores europeus fundamentais: a dignidade humana, liberdade, democracia, igualdade, o Estado de direito e respeito pelos direitos humanos, a paz e uma sociedade assente na tolerância, justiça, solidariedade e não discriminação.</p>
