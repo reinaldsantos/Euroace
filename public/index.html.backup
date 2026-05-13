@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroACE - Dia da Europa 2025</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e9e9e9; }
+        .site-shell { width: 100%; max-width: 100%; background: white; min-height: 100vh; box-shadow: none; }
+        .hero { width: 100%; background: white; display: flex; justify-content: center; align-items: center; padding: 10px 0; overflow: hidden; }
+        .hero img { width: 100%; height: auto; object-fit: contain; display: block; }
+        .hero-divider { height: 2px; background: linear-gradient(90deg, #24449b, #45c974, #3a5bc7); width: 100%; }
+        
+        /* Seletor de idioma */
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .language-selector button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            margin: 0 2px;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        .language-selector button.active {
+            background: #24449b;
+            color: white;
+        }
+        .language-selector button:hover {
+            background: #45c974;
+            color: white;
+        }
+        
+        .nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: clamp(1rem, 5vw, 5rem); flex-wrap: wrap; padding: .9rem 1rem; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; background: linear-gradient(90deg, rgba(69,201,116,.95), rgba(255,255,255,.9) 24%, rgba(248,197,49,.5) 47%, rgba(231,71,62,.85)); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(0,0,0,.08); }
+        .nav a, .nav .dropbtn { transition: transform .2s ease, color .2s ease; color: #333; text-decoration: none; background: none; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; cursor: pointer; font-family: inherit; }
+        .nav a:hover, .nav .dropbtn:hover { color: #24449b; transform: translateY(-2px); }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { background: transparent; border: none; font-size: clamp(1rem, 2.4vw, 1.3rem); font-weight: 800; color: #333; cursor: pointer; font-family: inherit; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background-color: white; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 8px; z-index: 1; overflow: hidden; margin-top: 0.5rem; }
+        .dropdown-content a { display: block; padding: 0.8rem 1.2rem; color: #24449b; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid #f0f0f0; text-decoration: none; }
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background: #f0f0f0; padding-left: 1.5rem; }
+        .dropdown:hover .dropdown-content { display: block; }
+        
+        main { padding: clamp(1.5rem, 4vw, 3rem); display: grid; gap: clamp(1.5rem, 3vw, 3rem); max-width: 1400px; margin: 0 auto; }
+        .section-card { background: rgba(255,255,255,.92); border: 1px solid rgba(0,0,0,.08); border-radius: 24px; padding: clamp(1.5rem, 3vw, 3rem); box-shadow: 0 18px 50px rgba(0,0,0,.08); }
+        .eyebrow { color: #24449b; text-transform: uppercase; letter-spacing: .16em; font-weight: 900; margin: 0 0 .6rem; font-size: 0.8rem; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: .98; margin-bottom: 1rem; }
+        h2 { font-size: clamp(1.3rem, 3vw, 2rem); line-height: 1.05; margin-bottom: 0.8rem; color: #24449b; }
+        .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
+        .btn { padding: .7rem 1.2rem; border-radius: 999px; font-weight: 800; border: 2px solid transparent; cursor: pointer; display: inline-block; text-decoration: none; font-size: 0.9rem; }
+        .primary { background: #24449b; color: white; }
+        .secondary { border-color: #45c974; color: #136b32; background: white; }
+        .grid-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+        .highlight { background: linear-gradient(135deg, #f7fff9, #fff8f6); }
+        
+        .categorias-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
+        .categoria-card { background: #f7f7f4; border-radius: 18px; padding: 1.2rem; text-align: center; text-decoration: none; transition: all 0.3s; border: 2px solid #e9ecef; }
+        .categoria-card:hover { transform: translateY(-4px); border-color: #45c974; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .categoria-icon { font-size: 2rem; }
+        .categoria-nome { font-size: 0.9rem; font-weight: bold; color: #24449b; margin: 0.4rem 0; }
+        
+        .contact { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; }
+        .contact-items { display: grid; gap: .6rem; color: #24449b; font-weight: 700; font-size: 0.9rem; }
+        
+        .footer { position: relative; background: #303030; color: #aaa; overflow: hidden; margin-top: 3rem; width: 100%; }
+        .footer-angle { height: 70px; background: white; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 8%); }
+        .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding: 3rem 4rem; max-width: 1400px; margin: 0 auto; }
+        .footer h2, .footer h3 { color: #f1f1f1; font-weight: 300; }
+        .footer h2 span { color: #45c974; }
+        .footer ul { list-style: none; padding: 0; margin: 0; }
+        .footer li { border-bottom: 1px dashed rgba(255,255,255,.18); padding: .7rem 0; }
+        .footer a { color: inherit; text-decoration: none; }
+        .footer a:hover { color: white; }
+        .socials { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .socials a { width: 42px; height: 42px; display: grid; place-items: center; background: #45c974; color: white; border-radius: 50%; text-decoration: none; }
+        .newsletter { display: grid; gap: .8rem; margin: 1rem 0; }
+        .newsletter input { padding: 0.8rem; font-size: 1rem; border: 0; border-radius: 8px; }
+        .newsletter button { width: fit-content; border: 0; background: #45c974; color: white; font-weight: 800; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; }
+        .admin-link { margin-top: 1rem; color: white; font-weight: 700; display: inline-block; text-decoration: none; }
+        .logo-strip { background: white; padding: 1rem 2rem; text-align: center; width: 100%; }
+        .logo-strip img { max-height: 100px; object-fit: contain; }
+        
+        .escolas-list { max-height: 300px; overflow-y: auto; }
+        
+        @media (max-width: 850px) {
+            .grid-two, .categorias-grid, .footer-content { grid-template-columns: 1fr; }
+            .contact { flex-direction: column; align-items: flex-start; }
+            main { padding: 1rem; }
+            .footer-content { padding: 2rem 1.5rem; gap: 2rem; }
+            .categorias-grid { grid-template-columns: repeat(2, 1fr); }
+            .language-selector { top: 5px; right: 10px; }
+            .language-selector button { font-size: 10px; padding: 3px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-shell">
+        <!-- Seletor de Idioma -->
+        <div class="language-selector">
+            <button id="btn-pt" class="active" onclick="mudarIdioma('pt')">🇵🇹 PT</button>
+            <button id="btn-es" onclick="mudarIdioma('es')">🇪🇸 ES</button>
+        </div>
+        
+        <div class="hero"><img src="assets/images/euroace.png" alt="EuroACE"></div>
+        <div class="hero-divider"></div>
+
+        <nav class="nav">
+            <a href="#enquadramento" data-pt="Enquadramento" data-es="Marco">Enquadramento</a>
+            <a href="#euroace26" data-pt="Euroace '26" data-es="Euroace '26">Euroace '26</a>
+            <div class="dropdown">
+                <button class="dropbtn" data-pt="Ementa ▼" data-es="Menú ▼">Ementa ▼</button>
+                <div class="dropdown-content">
+                    <a href="entrada.html" data-pt="🍽️ Entradas" data-es="🍽️ Entrantes">🍽️ Entradas</a>
+                    <a href="carne.html" data-pt="🥩 Pratos de Carne" data-es="🥩 Platos de Carne">🥩 Pratos de Carne</a>
+                    <a href="peixe.html" data-pt="🐟 Pratos de Peixe" data-es="🐟 Platos de Pescado">🐟 Pratos de Peixe</a>
+                    <a href="sobremesa.html" data-pt="🍰 Sobremesas" data-es="🍰 Postres">🍰 Sobremesas</a>
+                    <a href="bebidas.html" data-pt="🥤 Bebidas" data-es="🥤 Bebidas">🥤 Bebidas</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" data-pt="Escolas ▼" data-es="Escuelas ▼">Escolas ▼</button>
+                <div class="dropdown-content escolas-list">
+                    <a href="escola.html?nome=Agostinho Roseta">🏫 Agostinho Roseta</a>
+                    <a href="escola.html?nome=Alter do Chão">🏫 Alter do Chão</a>
+                    <a href="escola.html?nome=Raia Idanha-a-Nova">🏫 Raia Idanha-a-Nova</a>
+                    <a href="escola.html?nome=Região Alentejo">🏫 Região Alentejo</a>
+                    <a href="escola.html?nome=Agrícola Quintas da Lageosa">🏫 Agrícola Quintas da Lageosa</a>
+                    <a href="escola.html?nome=Escola Profissional do Fundão">🏫 Escola Profissional do Fundão</a>
+                    <a href="escola.html?nome=Instituto%20de%20Ense%C3%B1anzia%20%22San%20Fernando%22%20de%20Badajoz">🏫 Instituto de Enseñanzia "San Fernando" de Badajoz</a>
+                    <a href="escola.html?nome=IES Universidad Laboral de Cáceres">🏫 IES Universidad Laboral de Cáceres</a>
+                </div>
+            </div>
+            <a href="#contacto" data-pt="Contacto" data-es="Contacto">Contacto</a>
+        </nav>
+
+        <main>
+            <section id="enquadramento" class="section-card" style="background: white; box-shadow: 0 18px 50px rgba(0,0,0,.08);">
+                <p class="eyebrow" data-pt="Euroace '26" data-es="Euroace '26">Euroace '26</p>
+                <h1 data-pt="Proposta da Página Principal" data-es="Propuesta de la Página Principal">Proposta da Página Principal</h1>
+                <p data-pt="Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto." data-es="Plataforma dedicada al Día de Europa, reuniendo contenidos sobre la región, menús, escuelas participantes y contactos del proyecto.">Plataforma dedicada ao Dia da Europa, reunindo conteúdos sobre a região, ementas, escolas participantes e contactos do projeto.</p>
+                <div class="actions">
+                    <a class="btn primary" href="#ementa" data-pt="Ver ementa" data-es="Ver menú">Ver ementa</a>
+                    <a class="btn secondary" href="#contacto" data-pt="Contactar" data-es="Contactar">Contactar</a>
+                </div>
+                
+                <!-- Imagem do Horário -->
+                <div style="margin: 2rem auto 0 auto; text-align: center;">
+                    <img id="horario-img" src="assets/images/horariopt.png" alt="Programação EuroACE 2025" style="width: 80%; max-width: 700px; height: auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                </div>
+            </section>
+
+            <section id="euroace26" class="grid-two">
+                <article class="section-card">
+                    <p class="eyebrow" data-pt="A região" data-es="La región">A região</p>
+                    <h2 data-pt="Sabores com história" data-es="Sabores con historia">Sabores com história</h2>
+                    <p data-pt="Um espaço para valorizar a identidade cultural, gastronómica e educativa da região EUROACE, aproximando escolas, entidades e comunidade." data-es="Un espacio para valorizar la identidad cultural, gastronómica y educativa de la región EUROACE, acercando escuelas, entidades y comunidad.">Um espaço para valorizar a identidade cultural, gastronómica e educativa da região EUROACE, aproximando escolas, entidades e comunidade.</p>
+                </article>
+                <article class="section-card highlight">
+                    <h2 style="color:#f8c531;">✦</h2>
+                    <h2 data-pt="Gestão simples" data-es="Gestión sencilla">Gestão simples</h2>
+                    <p data-pt="A estrutura já prevê ligação futura a uma área administrativa para gestão de notícias, escolas, ementas e contactos." data-es="La estructura ya prevé conexión futura a un área administrativa para gestión de noticias, escuelas, menús y contactos.">A estrutura já prevê ligação futura a uma área administrativa para gestão de notícias, escolas, ementas e contactos.</p>
+                </article>
+            </section>
+
+            <section id="ementa" class="section-card">
+                <p class="eyebrow" data-pt="Ementa" data-es="Menú">Ementa</p>
+                <h2 data-pt="Pratos de Boa Memória | receitas com alma" data-es="Platos de Buena Memoria | recetas con alma">Pratos de Boa Memória | receitas com alma</h2>
+                <div class="categorias-grid">
+                    <a href="entrada.html" class="categoria-card"><div class="categoria-icon">🍽️</div><div class="categoria-nome" data-pt="Entradas" data-es="Entrantes">Entradas</div></a>
+                    <a href="carne.html" class="categoria-card"><div class="categoria-icon">🥩</div><div class="categoria-nome" data-pt="Pratos de Carne" data-es="Platos de Carne">Pratos de Carne</div></a>
+                    <a href="peixe.html" class="categoria-card"><div class="categoria-icon">🐟</div><div class="categoria-nome" data-pt="Pratos de Peixe" data-es="Platos de Pescado">Pratos de Peixe</div></a>
+                    <a href="sobremesa.html" class="categoria-card"><div class="categoria-icon">🍰</div><div class="categoria-nome" data-pt="Sobremesas" data-es="Postres">Sobremesas</div></a>
+                    <a href="bebidas.html" class="categoria-card"><div class="categoria-icon">🥤</div><div class="categoria-nome" data-pt="Bebidas" data-es="Bebidas">Bebidas</div></a>
+                </div>
+            </section>
+
+            <section id="contacto" class="contact section-card">
+                <div>
+                    <p class="eyebrow" data-pt="Contacto" data-es="Contacto">Contacto</p>
+                    <h2 data-pt="Fale connosco" data-es="Hable con nosotros">Fale connosco</h2>
+                    <p data-pt="Use esta secção para apresentar email, telefone, morada e formulário." data-es="Use esta sección para presentar email, teléfono, dirección y formulario.">Use esta secção para apresentar email, telefone, morada e formulário.</p>
+                </div>
+                <div class="contact-items">
+                    <span>📧 geral@euroace26.pt</span>
+                    <span>📍 Portugal / Espanha</span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-angle"></div>
+            <div class="footer-content">
+                <div>
+                    <h2>somos<span>EPF</span></h2>
+                    <p data-pt="Com experiência na formação e no desenvolvimento de projetos educativos, promovemos competências, inovação e valor para a comunidade." data-es="Con experiencia en la formación y en el desarrollo de proyectos educativos, promovemos competencias, innovación y valor para la comunidad.">Com experiência na formação e no desenvolvimento de projetos educativos, promovemos competências, inovação e valor para a comunidade.</p>
+                    <div class="socials"><a href="#">f</a><a href="#">◎</a></div>
+                </div>
+                <div>
+                    <h3 data-pt="Menu" data-es="Menú">Menu</h3>
+                    <ul>
+                        <li><a href="#enquadramento" data-pt="Enquadramento" data-es="Marco">Enquadramento</a></li>
+                        <li><a href="#euroace26" data-pt="Euroace '26" data-es="Euroace '26">Euroace '26</a></li>
+                        <li><a href="#ementa" data-pt="Ementa" data-es="Menú">Ementa</a></li>
+                        <li><a href="#contacto" data-pt="Contacto" data-es="Contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-pt="Oferta Formativa" data-es="Oferta Formativa">Oferta Formativa</h3>
+                    <ul>
+                        <li><a href="#" data-pt="Cursos Profissionais" data-es="Cursos Profesionales">Cursos Profissionais</a></li>
+                        <li><a href="#" data-pt="Cursos CEF" data-es="Cursos CEF">Cursos CEF</a></li>
+                        <li><a href="#" data-pt="Outras Ofertas Formativas" data-es="Otras Ofertas Formativas">Outras Ofertas Formativas</a></li>
+                        <li><a href="#" data-pt="Alumni e Parceiros" data-es="Alumni y Socios">Alumni e Parceiros</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-pt="Newsletter" data-es="Newsletter">Newsletter</h3>
+                    <p data-pt="Inscreva-se para receber informações e novidades do projeto." data-es="Inscríbase para recibir informaciones y novedades del proyecto.">Inscreva-se para receber informações e novidades do projeto.</p>
+                    <form class="newsletter" onsubmit="return false;">
+                        <input type="email" placeholder="seu e-mail" aria-label="Email">
+                        <button type="submit" data-pt="Subscrever" data-es="Suscribirse">Subscrever</button>
+                    </form>
+                    <a class="admin-link" href="admin/login.html" data-pt="⚙️ Área administrativa" data-es="⚙️ Área administrativa">⚙️ Área administrativa</a>
+                </div>
+            </div>
+            <div class="logo-strip">
+                <img src="assets/images/footer.png" alt="Logótipos dos parceiros e entidades financiadoras">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function mudarIdioma(idioma) {
+            // Atualizar botões ativos
+            document.getElementById('btn-pt').classList.remove('active');
+            document.getElementById('btn-es').classList.remove('active');
+            document.getElementById(`btn-${idioma}`).classList.add('active');
+            
+            // Mudar o lang do HTML
+            document.documentElement.lang = idioma === 'pt' ? 'pt-PT' : 'es-ES';
+            
+        n        // Trocar a imagem do horário
+        const imgHorario = document.getElementById("horario-img");
+        if (imgHorario) {
+            if (idioma === "pt") {
+                imgHorario.src = "assets/images/horariopt.png";
+                imgHorario.alt = "Programação EuroACE 2025";
+            } else {
+                imgHorario.src = "assets/images/horarioespanhol.png";
+                imgHorario.alt = "Programación EuroACE 2025";
+            }
+        }
+            // Percorrer todos os elementos com data-pt e data-es
+            const elementos = document.querySelectorAll('[data-pt]');
+            elementos.forEach(el => {
+                if (idioma === 'pt') {
+                    el.textContent = el.getAttribute('data-pt');
+                } else {
+                    el.textContent = el.getAttribute('data-es');
+                }
+            });
+        }
+        
+        // Inicializar em português
+        mudarIdioma('pt');
+    </script>
+</body>
+</html>
